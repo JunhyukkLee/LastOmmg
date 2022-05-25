@@ -1,6 +1,8 @@
 package com.example.lastommg;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
+    private static final String TAG = "dkssudgktpdy";
     private FirebaseAuth mAuth;
     private View sign_up;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -162,6 +164,7 @@ public class SignupActivity extends AppCompatActivity {
                                     if (task.getException() != null) {
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                         startToast(task.getException().toString());
+                                        deleteUser();
 
                                     }
 
@@ -213,27 +216,60 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onSuccess(@NonNull Void unused) {
                 if (user.isEmailVerified() == true) {
+                    Log . d (TAG, "LoginActivity - onStart() called");
                     Toast.makeText(SignupActivity.this, "이메일인증완료", Toast.LENGTH_SHORT).show();
                     startToast("이메일인증완료");
 
                 } else {
                     Toast.makeText(SignupActivity.this, "이메일인증실패", Toast.LENGTH_SHORT).show();
-                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                            } else {
-                                Toast.makeText(SignupActivity.this, "오류", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    deleteUser();
                 }
             }
         });
     }
 
+    private void deleteUser() {
+        FirebaseUser user = mAuth.getCurrentUser();
 
+        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                } else {
+                    Toast.makeText(SignupActivity.this, "오류", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if(user != null)
+            deleteUser();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if(user != null)
+            deleteUser();
+
+    }
+
+    public void onBackPressed() {
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if(user != null)
+            deleteUser();
+        super.onBackPressed();
+    }
 }
+

@@ -147,8 +147,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onClick(View view) {
 
                 signOut();
-                logoutb.setVisibility(GONE);
-                loginb.setVisibility(View.VISIBLE);
+                Intent intent3 = new Intent(MainActivity.this, LoginActivity.class);
+                //로그아웃누르면  로그인화면으로 이동
+                startActivity(intent3);
+
             }
         });
 

@@ -2,6 +2,8 @@ package com.example.lastommg;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener authStateListener;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +54,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button FindPW = (Button) findViewById(R.id.findPW);
+        FindPW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(LoginActivity.this, FindPW.class);
+                startActivity(intent2);
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance(); //파이어베이스어스객체의 공유 인스턴스를 가져옴
         findViewById(R.id.loginB).setOnClickListener(onClickListener);
@@ -65,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                Intent intent = new Intent(LoginActivity.this, NicknameForSNSuser.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
 
@@ -133,13 +141,17 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            Log . d (TAG, "FFAACCEEBBOOKK");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+
                         } else {
                             // If sign in fails, display a message to the user.
+                            Log . d (TAG, "FFAAIILL");
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
+
                         }
                     }
                 });
@@ -186,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             startToast("이메일 또는 비밀번호를 입력해주세요");
         }
 
-        
+
     }//파베관련
 
     private void startSignupActivity() {
@@ -201,6 +213,8 @@ public class LoginActivity extends AppCompatActivity {
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+
+
 }
 
 

@@ -9,7 +9,7 @@ import com.google.firebase.firestore.GeoPoint;
 import java.io.Serializable;
 
 public class Item implements Serializable {
-    //확인ㅇ
+
     int good=0;
     String id;
     String uri;
