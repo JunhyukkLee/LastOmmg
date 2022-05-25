@@ -58,15 +58,16 @@ public class SignupActivity extends AppCompatActivity {
         sign_up = findViewById(R.id.clear);
         findViewById(R.id.checking).setOnClickListener(onClickListener2);
         findViewById(R.id.nickdc).setOnClickListener(onClickListener3);
-        String pro_uri="drawable://"+R.drawable.yes;
+
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
+                String pro_uri="drawable://"+R.drawable.yes;
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
                 String phonenumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-                User user= new User(email,name,nickname,Uri.parse(pro_uri));
+                User user= new User(email,name,nickname);
                 db.collection("User").document(nickname).set(user);
                 userList.add(user);
                 Intent intent = new Intent(SignupActivity.this, MainActivity.class);

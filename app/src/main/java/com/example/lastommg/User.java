@@ -7,16 +7,16 @@ public class User {
 
 
      String id;
-     Uri pro_uri;
+    // Uri pro_uri;
     String username;
     String nickname;
 
 
-    public User(String id, String username, String nickname, Uri pro_uri) {
+    public User(String id, String username, String nickname) {
         this.id = id;
         this.username = username;
         this.nickname = nickname;
-        this.pro_uri=pro_uri;
+       // this.pro_uri=pro_uri;
 
     }
 
@@ -43,17 +43,17 @@ public class User {
         return nickname;
     }
 
-    public void setNickname() {
+    public void setNickname(String nickname) {
         this.nickname=nickname;
     }
 
-    public Uri getPro_uri() {
+    /*public Uri getPro_uri() {
         return pro_uri;
     }
 
-    public void setPro_uri() {
+    public void setPro_uri(Uri pro_uri) {
         this.pro_uri=pro_uri;
-    }
+    }*/
 
 
 
