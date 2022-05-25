@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <com.example.lastommg.RoundImageView
+            android:id="@+id/round_profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@null" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_height="50dp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_height="50dp"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/intro"
+                android:layout_height="50dp"
+                android:textAlignment="center" />
+        </TableLayout>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_album"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="166dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+</androidx.constraintlayout.widget.ConstraintLayout>

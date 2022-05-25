@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--FrameLayout을 사용하는 이유는 뷰페이저안에 요소들과 겹쳐 있는 움직이지 않는 고정 CircleIndicator와 버튼등을 구성하기 위함-->
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="680dp">
+        <!--희찬-->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="680dp"
+            android:clipChildren="false"
+            android:clipToPadding="false" >
+        </androidx.viewpager2.widget.ViewPager2>
+        <!--준혁-->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="680dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/item_layout_animation"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <!--윤수-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15dp"
+            android:src="@drawable/plus"
+            app:backgroundTint="@color/purple_200"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="90dp"
+            android:src="@drawable/camera"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/album"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="150dp"
+            android:src="@drawable/album"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="15sp"
+            android:layout_marginBottom="210dp"
+            android:src="@drawable/upload"
+            android:visibility="invisible"
+            app:backgroundTint="#ffffff"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/loginbt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="login"
+                android:visibility="gone"
+                />
+            <Button
+                android:id="@+id/logoutbt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="logout"
+                android:visibility="visible"/>
+            <Button
+                android:id="@+id/sortdistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="위치순"
+                android:visibility="visible"/>
+            <Button
+                android:id="@+id/sorttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="시간순"
+                android:visibility="visible"/>
+            <Button
+                android:id="@+id/mypage_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="마이페이지"
+                android:visibility="visible"/>
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/firstTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OMMG" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/secondTab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HI" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+</LinearLayout>
