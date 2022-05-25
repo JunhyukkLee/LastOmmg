@@ -36,7 +36,6 @@ public class Item implements Serializable {
         this.timestamp=timestamp;
     }
 
-
     public int getGood() {
         return good;
     }

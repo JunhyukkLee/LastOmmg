@@ -1,12 +1,17 @@
 package com.example.lastommg;
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,7 +20,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,9 +32,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,25 +67,26 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class PostActivity extends AppCompatActivity {
     Uri imageUri, photoURI;
-    String myUrl = "";
     String mCurrentPhotoPath, address;
     int flag;
-    double latitude, longitude;
+
     UploadTask uploadTask;
     StorageReference storageReference;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
     private AlbumAdapter mAlbumAdapter;
-    GeoPoint u_GeoPoint;
 
-
-    LocationManager manager;
-    //GPSListener gpsListener;
+    double latitude, longitude, latitude2, longitude2;
+    private GpsTracker gpsTracker;
+    GeoPoint u_GeoPoint, s_GeoPoint;
 
     ImageView close, image_added;
     TextView post;
@@ -69,8 +95,7 @@ public class PostActivity extends AppCompatActivity {
     RecyclerView p_recyclerView;
     ItemAdapter itemAdapter;
 
-
-    FirebaseFirestore db= FirebaseFirestore.getInstance();
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 1;
     private static final int FROM_CAMERA = 1111;
     private static final int FROM_ALBUM = 2222;
 
@@ -88,9 +113,12 @@ public class PostActivity extends AppCompatActivity {
         locate = findViewById(R.id.locate);
         gps = findViewById(R.id.btn_locate);
 
+        gpsTracker = new GpsTracker(PostActivity.this);
+        latitude = gpsTracker.getLatitude();
+        longitude = gpsTracker.getLongitude();
         u_GeoPoint = new GeoPoint(latitude, longitude);
 
-
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -98,7 +126,21 @@ public class PostActivity extends AppCompatActivity {
         itemAdapter = new ItemAdapter();
         p_recyclerView.setAdapter(itemAdapter);
 
+        RectangularBounds bounds = RectangularBounds.newInstance(
+                new LatLng(37.555744, 126.970431),
+                new LatLng(37.60000, 127.000000));
+        // Initialize Places.
+        Places.initialize(getApplicationContext(), "AIzaSyD19jDZHkiTXzRHVXpM66GK6m38IOfaFQ0");
 
+        // Create a new Places client instance.
+        PlacesClient placesClient = Places.createClient(this);
+
+        image_added.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeDialog();
+            }
+        });
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,15 +157,25 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
-
-        gps.setOnClickListener(new View.OnClickListener() {
+        locate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-
-        makeDialog();
+        gps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent map = new Intent(getApplicationContext(), MapsActivity.class);
+//                startActivity(map);
+                List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
+                // Start the autocomplete intent.
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.OVERLAY, fields)
+                        .build(PostActivity.this);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+            }
+        });
     }
 
     private void makeDialog() {
@@ -214,7 +266,7 @@ public class PostActivity extends AppCompatActivity {
     private void uploadImage() {
         Uri file = null;
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        Timestamp timestamp=new Timestamp(new Date());
+        Timestamp timestamp = new Timestamp(new Date());
         String imageFileName = "JPEG" + timeStamp + "jpg";
         StorageReference filereference = storageReference.child("image/" + imageFileName);
         if (flag == 0) {
@@ -240,8 +292,6 @@ public class PostActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageReference = storage.getReference();
                 StorageReference pathReference = storageReference.child("image");
                 if (pathReference == null) {
                     Toast.makeText(PostActivity.this, "저장소에 사진이 없습니다.", Toast.LENGTH_SHORT).show();
@@ -251,13 +301,14 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             address = getCurrentAddress(u_GeoPoint.getLatitude(), u_GeoPoint.getLongitude());
-                            Item item = new Item(0,mAuth.getUid(), imageFileName, uri.toString(), "010-9913-2992", u_GeoPoint, address, 0.0, timestamp);
+                            Toast.makeText(PostActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
+                            Item item = new Item(0, mAuth.getUid(), imageFileName, uri.toString(), "010-9913-2992", s_GeoPoint, address, 0.0, timestamp);
                             itemAdapter.addItem(item);
                             if (item.getId().equals(mAuth.getUid())) {
                                 mAlbumAdapter.addItem(item);
                                 Log.i("aaaaaa", String.valueOf(mAlbumAdapter.getItemCount()));
                             }
-                            Log.i("확인", imageFileName);
+                            Log.i("확인", item.getGeoPoint().toString());
                             db.collection("items").document(imageFileName).set(item);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -268,40 +319,10 @@ public class PostActivity extends AppCompatActivity {
                 }
                 itemAdapter.notifyDataSetChanged();
                 Toast.makeText(PostActivity.this, "사진 업로드가 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                p_recyclerView.startLayoutAnimation();
                 progressDialog.dismiss();
-
+                p_recyclerView.startLayoutAnimation();
             }
         });
-
-//        uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    UploadTask.TaskSnapshot downloadUri = task.getResult();
-//                    myUrl = downloadUri.toString();
-//
-//                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
-//
-//                    String postid = reference.push().getKey();
-//
-//                    HashMap<String, Object> hashMap = new HashMap<>();
-//                    hashMap.put("postid", postid);
-//                    hashMap.put("postimage", myUrl);
-//                    hashMap.put("description", description.getText().toString());
-//                    hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
-//                    reference.child(postid).setValue(hashMap);
-//
-//                    progressDialog.dismiss();
-//
-//                    //startActivity(new Intent(PostActivity.this, MainActivity.class));
-//                    finish();
-//                } else {
-//                    Toast.makeText(PostActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
     }
 
     public String getCurrentAddress(double latitude, double longitude) {
@@ -332,12 +353,6 @@ public class PostActivity extends AppCompatActivity {
         return address.getAddressLine(0).toString() + "\n";
     }
 
-    private String getFileExtension(Uri uri) {
-        android.webkit.MimeTypeMap.getSingleton();
-        String extension = MimeTypeMap.getFileExtensionFromUrl(String.valueOf(uri));
-        return extension;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -356,7 +371,6 @@ public class PostActivity extends AppCompatActivity {
 
             case FROM_ALBUM:
                 //앨범에서 가져오기
-
                 if (data.getData() != null) {
                     try {
                         photoURI = data.getData();
@@ -365,6 +379,32 @@ public class PostActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                }
+
+                break;
+            case AUTOCOMPLETE_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    Place place = Autocomplete.getPlaceFromIntent(data);
+                    Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + place.getLatLng());
+                    String add = place.getAddress();
+                    Geocoder geocoder = new Geocoder(this);
+                    try {
+                        List<Address> mResultLocation = geocoder.getFromLocationName(add, 1);
+                        latitude2 = mResultLocation.get(0).getLatitude();
+                        longitude2 = mResultLocation.get(0).getLongitude();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    locate.setText(place.getName());
+                    s_GeoPoint = new GeoPoint(latitude2, longitude2);
+                    Log.i(TAG, "지오포인트"+s_GeoPoint.getLatitude()+","+s_GeoPoint.getLongitude());
+
+                } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                    Status status = Autocomplete.getStatusFromIntent(data);
+                    Log.i(TAG, status.getStatusMessage());
+                } else if (resultCode == RESULT_CANCELED) {
+                    // The user canceled the operation.
                 }
 
                 break;
