@@ -63,11 +63,10 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
-                String pro_uri="drawable://"+R.drawable.yes;
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
                 String phonenumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-                User user= new User(email,name,nickname);
+                User user= new User(email,name,nickname,phonenumber);
                 db.collection("User").document(nickname).set(user);
                 userList.add(user);
                 Intent intent = new Intent(SignupActivity.this, MainActivity.class);
@@ -256,7 +255,7 @@ public class SignupActivity extends AppCompatActivity {
             deleteUser();
 
     }
-
+    /*
     @Override
     protected void onStop() {
         super.onStop();
@@ -265,7 +264,7 @@ public class SignupActivity extends AppCompatActivity {
         if(user != null)
             deleteUser();
 
-    }
+    }*/
 
     public void onBackPressed() {
         FirebaseUser user = mAuth.getCurrentUser();

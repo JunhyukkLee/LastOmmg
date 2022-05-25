@@ -59,7 +59,7 @@ public class NicknameForSNSuser extends AppCompatActivity {
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
                 String phonenumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-                User user= new User(email,name,nickname);
+                User user= new User(email,name,nickname,phonenumber);
                 db.collection("User").document(nickname).set(user);
                 userList.add(user);
                 Intent intent = new Intent(NicknameForSNSuser.this, MainActivity.class);
