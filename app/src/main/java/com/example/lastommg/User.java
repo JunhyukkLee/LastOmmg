@@ -1,18 +1,23 @@
 package com.example.lastommg;
 
 
+import android.net.Uri;
+
 public class User {
 
-    private String id;
-    private String username;
-    private String nickname;
-    private String phonenumber;
 
-    public User(String id, String username, String nickname,String phonenumber) {
+     String id;
+     Uri pro_uri;
+    String username;
+    String nickname;
+
+
+    public User(String id, String username, String nickname, Uri pro_uri) {
         this.id = id;
         this.username = username;
         this.nickname = nickname;
-        this.phonenumber=phonenumber;
+        this.pro_uri=pro_uri;
+
     }
 
     public User() {
@@ -42,13 +47,14 @@ public class User {
         this.nickname=nickname;
     }
 
-    public String getPhonenumber(String phonenumber) {
-        return phonenumber;
+    public Uri getPro_uri() {
+        return pro_uri;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPro_uri() {
+        this.pro_uri=pro_uri;
     }
+
 
 
 }
