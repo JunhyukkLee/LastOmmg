@@ -1,8 +1,7 @@
 package com.example.lastommg;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class SignupActivity extends AppCompatActivity {
-    private static final String TAG = "dkssudgktpdy";
+    private static final String TAG = "SignupActivity";
     private FirebaseAuth mAuth;
     private View sign_up;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -57,6 +56,7 @@ public class SignupActivity extends AppCompatActivity {
         sign_up = findViewById(R.id.clear);
         findViewById(R.id.checking).setOnClickListener(onClickListener2);
         findViewById(R.id.nickdc).setOnClickListener(onClickListener3);
+        String pro_uri="drawable://"+R.drawable.yes;
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +64,7 @@ public class SignupActivity extends AppCompatActivity {
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
                 String phonenumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-                User user= new User(email,name,nickname,phonenumber);
+                User user= new User(email,name,nickname, Uri.parse(pro_uri));
                 db.collection("User").document(nickname).set(user);
                 userList.add(user);
                 Intent intent = new Intent(SignupActivity.this, MainActivity.class);
@@ -164,7 +164,6 @@ public class SignupActivity extends AppCompatActivity {
                                     if (task.getException() != null) {
                                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
                                         startToast(task.getException().toString());
-                                        deleteUser();
 
                                     }
 
@@ -216,60 +215,27 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onSuccess(@NonNull Void unused) {
                 if (user.isEmailVerified() == true) {
-                    Log . d (TAG, "LoginActivity - onStart() called");
                     Toast.makeText(SignupActivity.this, "이메일인증완료", Toast.LENGTH_SHORT).show();
                     startToast("이메일인증완료");
 
                 } else {
                     Toast.makeText(SignupActivity.this, "이메일인증실패", Toast.LENGTH_SHORT).show();
-                    deleteUser();
+                    user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                            } else {
+                                Toast.makeText(SignupActivity.this, "오류", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                 }
             }
         });
     }
 
-    private void deleteUser() {
-        FirebaseUser user = mAuth.getCurrentUser();
 
-        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                } else {
-                    Toast.makeText(SignupActivity.this, "오류", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if(user != null)
-            deleteUser();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if(user != null)
-            deleteUser();
-
-    }
-
-    public void onBackPressed() {
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if(user != null)
-            deleteUser();
-        super.onBackPressed();
-    }
 }
-

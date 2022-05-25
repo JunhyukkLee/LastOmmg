@@ -47,6 +47,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -119,11 +120,29 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static Object context_main;
     AccessToken accessToken = AccessToken.getCurrentAccessToken();
     boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*Nickname nickName = (Nickname) getApplicationContext();
+        db.collection("User").whereEqualTo("id", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document:task.getResult()){
+                        User user=document.toObject(User.class);
+                        nickName.setNickname(user.getNickname());
+                        Log.d("닉네임확인",nickName.getNickname());
+                    }
+                }
+                else
+                {
+                    Log.d("실패","응 실패야",task.getException());
+                }
+            }
+        });*/
+        Log.d("이메일", user.getEmail());
 
         mAlbumAdapter = new AlbumAdapter();
         gpsTracker = new GpsTracker(MainActivity.this);
@@ -132,7 +151,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         u_GeoPoint = new GeoPoint(latitude, longitude);
         yoon = findViewById(R.id.plus);
         context_main=this;
-
 
         mAuth = FirebaseAuth.getInstance();
 

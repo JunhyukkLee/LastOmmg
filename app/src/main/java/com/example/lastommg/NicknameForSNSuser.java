@@ -1,6 +1,7 @@
 package com.example.lastommg;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,7 @@ public class NicknameForSNSuser extends AppCompatActivity {
         });
         mAuth = FirebaseAuth.getInstance();
         sign_up = findViewById(R.id.clear);
+        String pro_uri="drawable://"+R.drawable.yes;
         findViewById(R.id.nickdc).setOnClickListener(onClickListener3);
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +59,7 @@ public class NicknameForSNSuser extends AppCompatActivity {
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
                 String phonenumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-                User user= new User(email,name,nickname,phonenumber);
+                User user= new User(email,name,nickname, Uri.parse(pro_uri));
                 db.collection("User").document(nickname).set(user);
                 userList.add(user);
                 Intent intent = new Intent(NicknameForSNSuser.this, MainActivity.class);
