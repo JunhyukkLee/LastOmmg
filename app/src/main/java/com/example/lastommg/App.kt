@@ -3,8 +3,12 @@ package com.example.lastommg
 import android.app.Application
 import com.kakao.auth.KakaoSDK
 class App : Application() {
+
+    private var nickname: String? = null
+
     companion object{
         var instance : App? = null
+
     }
     override fun onCreate() {
         super.onCreate()
@@ -12,6 +16,7 @@ class App : Application() {
         if(KakaoSDK.getAdapter() == null){
             KakaoSDK.init(KakaoSDKAdapter(getAppContext()))
         }
+
     }
     override fun onTerminate()
     { super.onTerminate()
@@ -23,5 +28,15 @@ class App : Application() {
         }
         return instance!!
     }
+    fun getNickname(): String? {
+        return nickname
+    }
+
+    fun setNickname(nickname: String?) {
+        this.nickname=nickname;
+
+    }
+
+
 }
 

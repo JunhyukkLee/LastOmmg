@@ -125,7 +125,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*Nickname nickName = (Nickname) getApplicationContext();
+
+        App nickName = (App) getApplicationContext();
         db.collection("User").whereEqualTo("id", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -141,7 +142,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     Log.d("실패","응 실패야",task.getException());
                 }
             }
-        });*/
+        });
         Log.d("이메일", user.getEmail());
 
         mAlbumAdapter = new AlbumAdapter();

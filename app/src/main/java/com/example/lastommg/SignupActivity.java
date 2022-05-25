@@ -66,7 +66,6 @@ public class SignupActivity extends AppCompatActivity {
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
                 String phonenumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-
                 User user= new User(email,name,nickname,Uri.parse(pro_uri));
                 db.collection("User").document(nickname).set(user);
                 userList.add(user);
