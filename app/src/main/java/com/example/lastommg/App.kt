@@ -7,6 +7,8 @@ class App : Application() {
 
     private var nickname: String? = null
     private var pro_img: String?=null
+    private var email: String?=null
+    private var intro: String?=null
     companion object{
         var instance : App? = null
 
@@ -43,6 +45,22 @@ class App : Application() {
 
     fun setPro_img(pro_img: String?) {
         this.pro_img=pro_img;
+
+    }
+    fun getEmail(): String? {
+        return email
+    }
+
+    fun setEmail(email: String?) {
+        this.email=email;
+
+    }
+    fun getIntro(): String? {
+        return intro
+    }
+
+    fun setIntro(intro: String?) {
+        this.intro=intro;
 
     }
 

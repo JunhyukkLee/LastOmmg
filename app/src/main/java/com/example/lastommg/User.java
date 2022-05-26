@@ -9,7 +9,7 @@ public class User {
     private String username;
     private String nickname;
     private String pro_img;
-    private String intro;
+    private String intro="한줄소개를입력하세요";
 
     public User(String id, String username, String nickname,String pro_img) {
         this.id = id;
