@@ -105,14 +105,14 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
     }
     //프로필 이미지 설정 methods/////////////////////////////////////////////////////////////////
 
-      //앨범에서 이미지 가져오기
-      private void doTakeAlbumAction()
-      {
-          // 앨범 호출
-          Intent intent = new Intent(Intent.ACTION_PICK);
-          intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-          startActivityForResult(intent, PICK_FROM_ALBUM);
-      }
+    //앨범에서 이미지 가져오기
+    private void doTakeAlbumAction()
+    {
+        // 앨범 호출
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -175,33 +175,33 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         }
     }
 
-          //프로필 이미지 눌렀을 때
-          @Override
-          public void onClick(View view) {
-              DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener()
-              {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which)
-                  {
-                      doTakeAlbumAction();
-                  }
-              };
+    //프로필 이미지 눌렀을 때
+    @Override
+    public void onClick(View view) {
+        DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                doTakeAlbumAction();
+            }
+        };
 
-              DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener()
-              {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which)
-                  {
-                      dialog.dismiss();
-                  }
-              };
+        DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.dismiss();
+            }
+        };
 
-              new AlertDialog.Builder(this)
-                      .setTitle("업로드할 이미지 선택")
-                      .setNeutralButton("앨범선택", albumListener)
-                      .setNegativeButton("취소", cancelListener)
-                      .show();
-          }
+        new AlertDialog.Builder(this)
+                .setTitle("업로드할 이미지 선택")
+                .setNeutralButton("앨범선택", albumListener)
+                .setNegativeButton("취소", cancelListener)
+                .show();
+    }
 
 
 
@@ -229,4 +229,3 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         startActivity(intent, optionsCompat.toBundle());
     }
 }
-
