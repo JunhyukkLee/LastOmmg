@@ -131,10 +131,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public void popupXml(String nickname, String name, String decription,String uri, String phoneNumber, String address) {
         //Log.d(TAG, "okay");
-        App nickName = (App) context.getApplicationContext();
+        App local = (App) context.getApplicationContext();
         Map<String, Object> good_id = new HashMap<>();
         final Map<String, Object>[] aa = new Map[]{new HashMap<>()};
         Uri u = Uri.parse(uri);
+        Uri pro;
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.popup1, null);
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -145,8 +146,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Comment comment = new Comment(add_comment.getText().toString(),nickName.getNickname());
-                Log.d("id확인",nickName.getNickname());
+                Comment comment = new Comment(add_comment.getText().toString(),local.getNickname());
+                Log.d("id확인",local.getNickname());
                 commentAdapter.addComment(comment);
                 db.collection("items").document(name).collection("Comment").document(add_comment.getText().toString()).set(comment);
                 add_comment.setText(null);
@@ -169,19 +170,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 }
             }
         });
-        //ImageView image_profile = view.findViewById(R.id.image_profile); 이건 나중에 프로필 사진 해결되면
+        ImageView image_profile = view.findViewById(R.id.image_profile);
+        pro = Uri.parse(local.getPro_img());
+        Glide.with(context).load(pro).into(image_profile);
+
         ImageView imageView = view.findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.yes);//이것도 프로필사진으로 변경해야함
         ImageButton good = view.findViewById(R.id.good);
         final DocumentReference sfDocRef = db.collection("items").document(name);
-        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(nickName.getNickname());
+        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(local.getNickname());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Log.d("체크", String.valueOf(document.getData()));
-                    if (String.valueOf(document.getData()).equals("{nickname=" + nickName.getNickname() + "}")) {
+                    if (String.valueOf(document.getData()).equals("{nickname=" + local.getNickname() + "}")) {
                         good.setImageResource(R.drawable.yes);
                         good.setTag("liked");
                     } else {
@@ -202,8 +205,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 if (good.getTag().equals("like")) {
                     good.setTag("liked");
                     good.setImageResource(R.drawable.yes);
-                    good_id.put("nickname", nickName.getNickname());
-                    db.collection("items").document(name).collection("Good").document(nickName.getNickname()).set(good_id);
+                    good_id.put("nickname", local.getNickname());
+                    db.collection("items").document(name).collection("Good").document(local.getNickname()).set(good_id);
                     db.runTransaction(new Transaction.Function<Void>() {
                         @Override
                         public Void apply(Transaction transaction) throws FirebaseFirestoreException {

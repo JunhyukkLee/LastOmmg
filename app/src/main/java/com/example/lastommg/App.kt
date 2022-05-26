@@ -1,11 +1,12 @@
 package com.example.lastommg
 
 import android.app.Application
+import android.net.Uri
 import com.kakao.auth.KakaoSDK
 class App : Application() {
 
     private var nickname: String? = null
-
+    private var pro_img: String?=null
     companion object{
         var instance : App? = null
 
@@ -34,6 +35,14 @@ class App : Application() {
 
     fun setNickname(nickname: String?) {
         this.nickname=nickname;
+
+    }
+    fun getPro_img(): String? {
+        return pro_img;
+    }
+
+    fun setPro_img(pro_img: String?) {
+        this.pro_img=pro_img;
 
     }
 

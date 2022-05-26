@@ -12,12 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -26,12 +30,12 @@ public class NicknameForSNSuser extends AppCompatActivity {
     private View sign_up;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<User> userList=new ArrayList<>();
-
+    StorageReference storageReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_sns);
-
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -57,11 +61,20 @@ public class NicknameForSNSuser extends AppCompatActivity {
             public void onClick(View v) {
                 String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
-                String phonenumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-                User user= new User(email,name,nickname,phonenumber);
-                db.collection("User").document(nickname).set(user);
-                userList.add(user);
+                StorageReference submitProfile = storageReference.child("image/" + "b.PNG");
+                submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        User user= new User(email,name,nickname,uri.toString());
+                        db.collection("User").document(nickname).set(user);
+                        userList.add(user);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
                 Intent intent = new Intent(NicknameForSNSuser.this, MainActivity.class);
                 startActivity(intent);
             }

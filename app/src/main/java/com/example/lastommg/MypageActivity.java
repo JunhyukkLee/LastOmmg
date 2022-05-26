@@ -61,14 +61,14 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         App nickName = (App) getApplicationContext();
         mAlbumAdapter = new AlbumAdapter();
         mAuth = FirebaseAuth.getInstance();
-    //프로필 이미지 띄우기(동그랗게)
+        //프로필 이미지 띄우기(동그랗게)
         mPressProfileImg = findViewById(R.id.round_profile_image);
         mPressProfileImg.setOnClickListener(this);
 
 //        RoundImageView riv = findViewById(R.id.round_profile_image);
 //        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.profile_img);
 //        riv.setImageBitmap(bm);
-    //프로필 정보 띄우기
+        //프로필 정보 띄우기
         TextView nameSlot = findViewById(R.id.name);
         TextView emailSlot = findViewById(R.id.email);
         TextView introduction = findViewById(R.id.intro);
@@ -77,7 +77,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         introduction.setText("Hi, im cute");
         //
         mContext = this;
-    //밑에 사진 띄우기
+        //밑에 사진 띄우기
         init();
 
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

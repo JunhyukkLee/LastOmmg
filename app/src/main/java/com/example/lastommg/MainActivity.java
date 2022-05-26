@@ -121,19 +121,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     AccessToken accessToken = AccessToken.getCurrentAccessToken();
     boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        App nickName = (App) getApplicationContext();
+        App local = (App) getApplicationContext();
         db.collection("User").whereEqualTo("id", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document:task.getResult()){
                         User user=document.toObject(User.class);
-                        nickName.setNickname(user.getNickname());
+                        local.setNickname(user.getNickname());
+                        local.setPro_img(user.getPro_img());
+                        Log.d("uri세팅", local.getPro_img());
+                        Log.d("닉네임세팅", local.getNickname());
                     }
                 }
                 else

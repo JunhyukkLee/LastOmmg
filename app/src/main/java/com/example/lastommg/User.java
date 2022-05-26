@@ -1,18 +1,21 @@
 package com.example.lastommg;
 
 
+import android.net.Uri;
+
 public class User {
 
     private String id;
     private String username;
     private String nickname;
-    private String phonenumber;
+    private String pro_img;
+    private String intro;
 
-    public User(String id, String username, String nickname,String phonenumber) {
+    public User(String id, String username, String nickname,String pro_img) {
         this.id = id;
         this.username = username;
         this.nickname = nickname;
-        this.phonenumber=phonenumber;
+        this.pro_img=pro_img;
     }
 
     public User() {
@@ -42,13 +45,23 @@ public class User {
         this.nickname=nickname;
     }
 
-    public String getPhonenumber(String phonenumber) {
-        return phonenumber;
+    public String getPro_img() {
+        return pro_img;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPro_img() {
+        this.pro_img=pro_img;
     }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro() {
+        this.intro=intro;
+    }
+
+
 
 
 }
