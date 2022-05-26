@@ -58,6 +58,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage);
+        App nickName = (App) getApplicationContext();
         mAlbumAdapter = new AlbumAdapter();
         mAuth = FirebaseAuth.getInstance();
     //프로필 이미지 띄우기(동그랗게)
@@ -85,7 +86,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document:task.getResult()){
                         Item item=document.toObject(Item.class);
-                        if(item.getId().equals(mAuth.getUid())) {
+                        if(item.getNickname().equals(nickName.getNickname())) {
                             mAlbumAdapter.addItem(item);
                         }
                         Log.d("확인",document.getId()+"=>"+document.getData());

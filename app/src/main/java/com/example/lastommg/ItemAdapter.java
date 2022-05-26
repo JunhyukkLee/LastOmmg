@@ -123,14 +123,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popupXml(items.get(position).getId(), items.get(position).getName(), items.get(position).getUri(), items.get(position).getPhoneNumber(), items.get(position).getAddress(), items.get(position).getDistance());
+                popupXml(items.get(position).getNickname(), items.get(position).getName(),items.get(position).getDecripthion(), items.get(position).getUri(), items.get(position).getPhoneNumber(), items.get(position).getAddress());
             }
         });
     }
 
 
-    public void popupXml(String id, String name, String uri, String phoneNumber, String address, Double distance) {
+    public void popupXml(String nickname, String name, String decription,String uri, String phoneNumber, String address) {
         //Log.d(TAG, "okay");
+        App nickName = (App) context.getApplicationContext();
         Map<String, Object> good_id = new HashMap<>();
         final Map<String, Object>[] aa = new Map[]{new HashMap<>()};
         Uri u = Uri.parse(uri);
@@ -144,10 +145,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Comment comment = new Comment(add_comment.getText().toString(),mAuth.getUid());
-                Log.d("id확인", mAuth.getUid());
+                Comment comment = new Comment(add_comment.getText().toString(),nickName.getNickname());
+                Log.d("id확인",nickName.getNickname());
                 commentAdapter.addComment(comment);
                 db.collection("items").document(name).collection("Comment").document(add_comment.getText().toString()).set(comment);
+                add_comment.setText(null);
                 commentAdapter.notifyDataSetChanged();
             }
         });
@@ -172,14 +174,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         imageView.setImageResource(R.drawable.yes);//이것도 프로필사진으로 변경해야함
         ImageButton good = view.findViewById(R.id.good);
         final DocumentReference sfDocRef = db.collection("items").document(name);
-        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(mAuth.getUid());
+        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(nickName.getNickname());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     Log.d("체크", String.valueOf(document.getData()));
-                    if (String.valueOf(document.getData()).equals("{id=" + mAuth.getUid() + "}")) {
+                    if (String.valueOf(document.getData()).equals("{nickname=" + nickName.getNickname() + "}")) {
                         good.setImageResource(R.drawable.yes);
                         good.setTag("liked");
                     } else {
@@ -200,8 +202,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 if (good.getTag().equals("like")) {
                     good.setTag("liked");
                     good.setImageResource(R.drawable.yes);
-                    good_id.put("id", mAuth.getUid());
-                    db.collection("items").document(name).collection("Good").document(mAuth.getUid()).set(good_id);
+                    good_id.put("nickname", nickName.getNickname());
+                    db.collection("items").document(name).collection("Good").document(nickName.getNickname()).set(good_id);
                     db.runTransaction(new Transaction.Function<Void>() {
                         @Override
                         public Void apply(Transaction transaction) throws FirebaseFirestoreException {
@@ -275,9 +277,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         textView.setTextSize(35);
         textView.setText(name + "\n");
-        textView.append(phoneNumber + "\n");
+        textView.append(decription + "\n");
         textView.append(address + "\n");
-        textView.append(distance + "\n");
+        textView.append(phoneNumber + "\n");
+
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("음식점정보").setView(view);

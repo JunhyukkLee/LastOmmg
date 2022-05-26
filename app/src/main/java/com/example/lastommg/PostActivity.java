@@ -90,7 +90,7 @@ public class PostActivity extends AppCompatActivity {
 
     ImageView close, image_added;
     TextView post;
-    EditText description, locate;
+    EditText description, locate,phoneNumber,name;
     ImageButton gps;
     RecyclerView p_recyclerView;
     ItemAdapter itemAdapter;
@@ -110,7 +110,9 @@ public class PostActivity extends AppCompatActivity {
         image_added = findViewById(R.id.image_added);
         post = findViewById(R.id.post);
         description = findViewById(R.id.description);
+        name=findViewById(R.id.name);
         locate = findViewById(R.id.locate);
+        phoneNumber=findViewById(R.id.phoneNumber);
         gps = findViewById(R.id.btn_locate);
 
         gpsTracker = new GpsTracker(PostActivity.this);
@@ -265,6 +267,8 @@ public class PostActivity extends AppCompatActivity {
 
     private void uploadImage() {
         Uri file = null;
+        App nickName = (App) getApplicationContext();
+
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         Timestamp timestamp = new Timestamp(new Date());
         String imageFileName = "JPEG" + timeStamp + "jpg";
@@ -300,16 +304,16 @@ public class PostActivity extends AppCompatActivity {
                     submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            address = getCurrentAddress(u_GeoPoint.getLatitude(), u_GeoPoint.getLongitude());
+                            address = getCurrentAddress(s_GeoPoint.getLatitude(), s_GeoPoint.getLongitude());
                             Toast.makeText(PostActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
-                            Item item = new Item(0, mAuth.getUid(), imageFileName, uri.toString(), "010-9913-2992", s_GeoPoint, address, 0.0, timestamp);
+                            Item item = new Item(0, nickName.getNickname(), name.getText().toString(),description.getText().toString(), uri.toString(), phoneNumber.getText().toString(), s_GeoPoint, address, 0.0, timestamp);
                             itemAdapter.addItem(item);
-                            if (item.getId().equals(mAuth.getUid())) {
+                            if (item.getNickname().equals(nickName.getNickname())) {
                                 mAlbumAdapter.addItem(item);
                                 Log.i("aaaaaa", String.valueOf(mAlbumAdapter.getItemCount()));
                             }
                             Log.i("확인", item.getGeoPoint().toString());
-                            db.collection("items").document(imageFileName).set(item);
+                            db.collection("items").document(name.getText().toString()).set(item);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override

@@ -90,7 +90,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     private void delItem(){
         supportFinishAfterTransition();
-        Item aitem=new Item(mitem.getGood(),mitem.getId(),mitem.getName(), mitem.getUri(), mitem.getPhoneNumber(), geoPoint,mitem.getAddress(),mitem.getDistance(), timestamp);
+        Item aitem=new Item(mitem.getGood(),mitem.getNickname(),mitem.getName(), mitem.getDecripthion(),mitem.getUri(), mitem.getPhoneNumber(), geoPoint,mitem.getAddress(),mitem.getDistance(), timestamp);
         db.collection("items").document(aitem.getName())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

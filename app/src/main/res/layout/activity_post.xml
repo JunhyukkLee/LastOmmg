@@ -58,13 +58,20 @@
             android:layout_gravity="center"
             android:src="@mipmap/ic_launcher"
             android:id="@+id/image_added"/>
-
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="음식점 이름"
+            android:maxLines="5"
+            android:minHeight="48dp" />
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:hint="Description"
+            android:hint="소개글"
             android:maxLines="5"
             android:minHeight="48dp" />
         <RelativeLayout
@@ -76,7 +83,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="Location"
+                android:hint="위치"
                 android:maxLines="5"
                 android:minHeight="48dp" />
 
@@ -89,6 +96,14 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/gps" />
         </RelativeLayout>
+        <EditText
+            android:id="@+id/phoneNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:hint="음식점 전화번호"
+            android:maxLines="5"
+            android:minHeight="48dp" />
     </LinearLayout>
 </LinearLayout>
 

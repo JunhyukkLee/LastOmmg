@@ -134,7 +134,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     for(QueryDocumentSnapshot document:task.getResult()){
                         User user=document.toObject(User.class);
                         nickName.setNickname(user.getNickname());
-                        Log.d("닉네임확인",nickName.getNickname());
                     }
                 }
                 else

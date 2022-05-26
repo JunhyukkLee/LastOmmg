@@ -11,7 +11,8 @@ import java.io.Serializable;
 public class Item implements Serializable {
 
     int good=0;
-    String id;
+    String nickname;
+    String decripthion;
     String uri;
     String name;
     String phoneNumber;
@@ -23,10 +24,11 @@ public class Item implements Serializable {
 
     }
 
-    public Item(int good,String id,String name, String uri, String phoneNumber,GeoPoint geoPoint,String address,double distance,Timestamp timestamp)  {
+    public Item(int good,String nickname,String name,String decripthion, String uri, String phoneNumber,GeoPoint geoPoint,String address,double distance,Timestamp timestamp)  {
        // this.resId = resId;
         this.good=good;
-        this.id=id;
+        this.nickname=nickname;
+        this.decripthion=decripthion;
         this.name = name;
         this.uri=uri;
         this.phoneNumber = phoneNumber;
@@ -42,11 +44,17 @@ public class Item implements Serializable {
     public void setGood() {
         this.good=good;
     }
-    public String getId() {
-        return id;
+    public String getDecripthion() {
+        return decripthion;
     }
-    public void setId() {
-        this.id = id;
+    public void setDecripthion() {
+        this.decripthion=decripthion;
+    }
+    public String getNickname() {
+        return nickname;
+    }
+    public void setNickname() {
+        this.nickname = nickname;
     }
     public String getName() {
         return name;
