@@ -95,9 +95,9 @@ public class PostActivity extends AppCompatActivity {
     RecyclerView p_recyclerView;
     ItemAdapter itemAdapter;
 
-    private static final int AUTOCOMPLETE_REQUEST_CODE = 1;
-    private static final int FROM_CAMERA = 1111;
-    private static final int FROM_ALBUM = 2222;
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 1111;
+    private static final int FROM_CAMERA = 2222;
+    private static final int FROM_ALBUM = 3333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,11 +128,10 @@ public class PostActivity extends AppCompatActivity {
         itemAdapter = new ItemAdapter();
         p_recyclerView.setAdapter(itemAdapter);
 
-        RectangularBounds bounds = RectangularBounds.newInstance(
-                new LatLng(37.555744, 126.970431),
-                new LatLng(37.60000, 127.000000));
         // Initialize Places.
         Places.initialize(getApplicationContext(), "AIzaSyD19jDZHkiTXzRHVXpM66GK6m38IOfaFQ0");
+
+        post.setEnabled(false);
 
         // Create a new Places client instance.
         PlacesClient placesClient = Places.createClient(this);
@@ -188,6 +187,7 @@ public class PostActivity extends AppCompatActivity {
                 Log.v("알림", "다이얼로그 > 사진촬영 선택");
                 flag = 0;
                 takePhoto();
+                post.setEnabled(true);
             }
 
         }).setNeutralButton("앨범선택", new DialogInterface.OnClickListener() {
@@ -195,6 +195,7 @@ public class PostActivity extends AppCompatActivity {
                 Log.v("알림", "다이얼로그 > 앨범선택 선택");
                 flag = 1;
                 getAlbum();
+                post.setEnabled(true);
             }
         }).setNegativeButton("취소   ", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -254,7 +255,6 @@ public class PostActivity extends AppCompatActivity {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         sendBroadcast(mediaScanIntent);
-        Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     private void getAlbum() {
@@ -291,6 +291,7 @@ public class PostActivity extends AppCompatActivity {
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(PostActivity.this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
                 Log.v("알림", "사진 업로드 실패");
+                progressDialog.dismiss();
                 e.printStackTrace();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
