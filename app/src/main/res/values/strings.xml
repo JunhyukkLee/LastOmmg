@@ -11,4 +11,5 @@
     <string name="email_text">Email:</string>
     <string name="kakao_app_key">19516a68e965371a0bd3fd30eb88a487</string>
     <string name="google_map_key">AIzaSyD19jDZHkiTXzRHVXpM66GK6m38IOfaFQ0</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

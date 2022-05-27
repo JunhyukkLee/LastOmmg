@@ -90,10 +90,12 @@ public class PostActivity extends AppCompatActivity {
 
     ImageView close, image_added;
     TextView post;
-    EditText description, locate,phoneNumber,name;
+    EditText description, locate, phoneNumber, name;
     ImageButton gps;
     RecyclerView p_recyclerView;
     ItemAdapter itemAdapter;
+
+    public static Context p_context;
 
     private static final int AUTOCOMPLETE_REQUEST_CODE = 1111;
     private static final int FROM_CAMERA = 2222;
@@ -110,9 +112,9 @@ public class PostActivity extends AppCompatActivity {
         image_added = findViewById(R.id.image_added);
         post = findViewById(R.id.post);
         description = findViewById(R.id.description);
-        name=findViewById(R.id.name);
+        name = findViewById(R.id.name);
         locate = findViewById(R.id.locate);
-        phoneNumber=findViewById(R.id.phoneNumber);
+        phoneNumber = findViewById(R.id.phoneNumber);
         gps = findViewById(R.id.btn_locate);
 
         gpsTracker = new GpsTracker(PostActivity.this);
@@ -128,6 +130,7 @@ public class PostActivity extends AppCompatActivity {
         itemAdapter = new ItemAdapter();
         p_recyclerView.setAdapter(itemAdapter);
 
+        p_context = this;
         // Initialize Places.
         Places.initialize(getApplicationContext(), "AIzaSyD19jDZHkiTXzRHVXpM66GK6m38IOfaFQ0");
 
@@ -167,14 +170,14 @@ public class PostActivity extends AppCompatActivity {
         gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent map = new Intent(getApplicationContext(), MapsActivity.class);
-//                startActivity(map);
-                List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
-                // Start the autocomplete intent.
-                Intent intent = new Autocomplete.IntentBuilder(
-                        AutocompleteActivityMode.OVERLAY, fields)
-                        .build(PostActivity.this);
-                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+                Intent map = new Intent(getApplicationContext(), MapsActivity.class);
+                startActivity(map);
+//                List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
+//                // Start the autocomplete intent.
+//                Intent intent = new Autocomplete.IntentBuilder(
+//                        AutocompleteActivityMode.OVERLAY, fields)
+//                        .build(PostActivity.this);
+//                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
             }
         });
     }
@@ -307,7 +310,7 @@ public class PostActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             address = getCurrentAddress(s_GeoPoint.getLatitude(), s_GeoPoint.getLongitude());
                             Toast.makeText(PostActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
-                            Item item = new Item(0, nickName.getNickname(), name.getText().toString(),description.getText().toString(), uri.toString(), phoneNumber.getText().toString(), s_GeoPoint, address, 0.0, timestamp);
+                            Item item = new Item(0, nickName.getNickname(), name.getText().toString(), description.getText().toString(), uri.toString(), phoneNumber.getText().toString(), s_GeoPoint, address, 0.0, timestamp);
                             itemAdapter.addItem(item);
                             if (item.getNickname().equals(nickName.getNickname())) {
                                 mAlbumAdapter.addItem(item);
@@ -361,58 +364,59 @@ public class PostActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case FROM_CAMERA:
-                try {
-                    Log.v("알림", "FROM_CAMERA 처리");
-                    galleryAddPic();
-                    image_added.setImageURI(imageUri);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                break;
-
-            case FROM_ALBUM:
-                //앨범에서 가져오기
-                if (data.getData() != null) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case FROM_CAMERA:
                     try {
-                        photoURI = data.getData();
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoURI);
-                        image_added.setImageBitmap(bitmap);
+                        Log.v("알림", "FROM_CAMERA 처리");
+                        galleryAddPic();
+                        image_added.setImageURI(imageUri);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
 
-                break;
-            case AUTOCOMPLETE_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    Place place = Autocomplete.getPlaceFromIntent(data);
-                    Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + place.getLatLng());
-                    String add = place.getAddress();
-                    Geocoder geocoder = new Geocoder(this);
-                    try {
-                        List<Address> mResultLocation = geocoder.getFromLocationName(add, 1);
-                        latitude2 = mResultLocation.get(0).getLatitude();
-                        longitude2 = mResultLocation.get(0).getLongitude();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    break;
+
+                case FROM_ALBUM:
+                    //앨범에서 가져오기
+                    if (data.getData() != null) {
+                        try {
+                            photoURI = data.getData();
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), photoURI);
+                            image_added.setImageBitmap(bitmap);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
-                    locate.setText(place.getName());
-                    s_GeoPoint = new GeoPoint(latitude2, longitude2);
-                    Log.i(TAG, "지오포인트"+s_GeoPoint.getLatitude()+","+s_GeoPoint.getLongitude());
+                    break;
+                case AUTOCOMPLETE_REQUEST_CODE:
+                    if (resultCode == RESULT_OK) {
+                        Place place = Autocomplete.getPlaceFromIntent(data);
+                        Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + place.getLatLng());
+                        String add = place.getAddress();
+                        Geocoder geocoder = new Geocoder(this);
+                        try {
+                            List<Address> mResultLocation = geocoder.getFromLocationName(add, 1);
+                            latitude2 = mResultLocation.get(0).getLatitude();
+                            longitude2 = mResultLocation.get(0).getLongitude();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
-                } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                    Status status = Autocomplete.getStatusFromIntent(data);
-                    Log.i(TAG, status.getStatusMessage());
-                } else if (resultCode == RESULT_CANCELED) {
-                    // The user canceled the operation.
-                }
+                        locate.setText(place.getName());
+                        s_GeoPoint = new GeoPoint(latitude2, longitude2);
+                        Log.i(TAG, "지오포인트" + s_GeoPoint.getLatitude() + "," + s_GeoPoint.getLongitude());
 
-                break;
+                    } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                        Status status = Autocomplete.getStatusFromIntent(data);
+                        Log.i(TAG, status.getStatusMessage());
+                    } else if (resultCode == RESULT_CANCELED) {
+                        // The user canceled the operation.
+                    }
+
+                    break;
+            }
         }
     }
 }
