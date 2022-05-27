@@ -135,6 +135,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         User user=document.toObject(User.class);
                         local.setNickname(user.getNickname());
                         local.setPro_img(user.getPro_img());
+                        local.setEmail(user.getId());
+                        local.setIntro(user.getIntro());
                         Log.d("uri세팅", local.getPro_img());
                         Log.d("닉네임세팅", local.getNickname());
                     }

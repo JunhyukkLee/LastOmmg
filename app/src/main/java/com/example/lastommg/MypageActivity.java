@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,14 +23,24 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Transaction;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -42,11 +53,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 // 앨범 클릭 추가할때 ,setOnclick implements해야함
 public class MypageActivity extends AppCompatActivity implements AlbumAdapter.OnItemClickListener, Serializable, View.OnClickListener {
-
+    UploadTask uploadTask;
     private Context mContext;
     private RecyclerView my_album;
     private AlbumAdapter mAlbumAdapter;
-
+    StorageReference storageReference;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth;
     private static final int PICK_FROM_CAMERA = 0;
@@ -60,6 +71,8 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage);
         App local = (App) getApplicationContext();
+        Log.d("유알아이", local.getPro_img());
+        storageReference = FirebaseStorage.getInstance().getReference();
         mAlbumAdapter = new AlbumAdapter();
         mAuth = FirebaseAuth.getInstance();
         //프로필 이미지 띄우기(동그랗게)
@@ -76,9 +89,9 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         TextView nameSlot = findViewById(R.id.name);
         TextView emailSlot = findViewById(R.id.email);
         TextView introduction = findViewById(R.id.intro);
-        nameSlot.setText("MinHyugi");
-        emailSlot.setText("minhyuk9803@gmail.com");
-        introduction.setText("Hi, im cute");
+        nameSlot.setText(local.getNickname());
+        emailSlot.setText(local.getEmail());
+        introduction.setText(local.getIntro());
         //
         mContext = this;
         //밑에 사진 띄우기
@@ -116,7 +129,9 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        App local = (App) getApplicationContext();
         super.onActivityResult(requestCode, resultCode, data);
+        final DocumentReference sfDocRef = db.collection("User").document(local.getNickname());
         if (resultCode != RESULT_OK) {
             return;
         }
@@ -150,10 +165,73 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                         mImageCaptureUri = data.getData();
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageCaptureUri);
                         mPressProfileImg.setImageBitmap(bitmap);
+                        StorageReference filereference = storageReference.child("profile/" + local.getNickname());
+                        uploadTask = filereference.putFile(mImageCaptureUri);
+                        ProgressDialog progressDialog = new ProgressDialog(this);
+                        progressDialog.setMessage("Waiting");
+                        progressDialog.show();
+
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MypageActivity.this, "프로필사진 업로드 실패", Toast.LENGTH_SHORT).show();
+                                Log.v("알림", "사진 업로드 실패");
+                                progressDialog.dismiss();
+                                e.printStackTrace();
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                StorageReference pathReference = storageReference.child("image");
+                                if (pathReference == null) {
+                                    Toast.makeText(MypageActivity.this, "저장소에 사진이 없습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    StorageReference submitProfile = storageReference.child("profile/" + local.getNickname());
+                                    submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            local.setPro_img(uri.toString());
+                                            db.runTransaction(new Transaction.Function<Void>() {
+                                                @Override
+                                                public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                                                    DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                                                    // Note: this could be done without a transaction
+                                                    //       by updating the population using FieldValue.increment()
+                                                    transaction.update(sfDocRef, "pro_img", uri.toString());
+                                                    // Success
+                                                    return null;
+                                                }
+                                            }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("Log", "Transaction success!");
+                                                }
+                                            })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w("Log", "Transaction failure.", e);
+                                                        }
+                                                    });
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                        }
+                                    });
+                                }
+                                progressDialog.dismiss();
+                            }
+                        });
+
+
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+                break;
             }
 
             case PICK_FROM_CAMERA: {
