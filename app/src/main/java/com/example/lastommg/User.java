@@ -9,13 +9,14 @@ public class User {
     private String username;
     private String nickname;
     private String pro_img;
-    private String intro="한줄소개를입력하세요";
+    private String intro;
 
-    public User(String id, String username, String nickname,String pro_img) {
+    public User(String id, String intro,String username, String nickname,String pro_img) {
         this.id = id;
         this.username = username;
         this.nickname = nickname;
         this.pro_img=pro_img;
+        this.intro=intro;
     }
 
     public User() {

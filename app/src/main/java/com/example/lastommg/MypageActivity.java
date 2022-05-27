@@ -22,6 +22,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +73,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage);
         App local = (App) getApplicationContext();
+        final DocumentReference sfDocRef = db.collection("User").document(local.getNickname());
         Log.d("유알아이", local.getPro_img());
         storageReference = FirebaseStorage.getInstance().getReference();
         mAlbumAdapter = new AlbumAdapter();
@@ -92,6 +95,52 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         nameSlot.setText(local.getNickname());
         emailSlot.setText(local.getEmail());
         introduction.setText(local.getIntro());
+        EditText editIntro=findViewById(R.id.edit_intro);
+        ImageButton btn_intro=findViewById(R.id.btn_intro);
+        btn_intro.setTag("edit");
+        btn_intro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(btn_intro.getTag().equals("edit")){
+                    btn_intro.setTag("ok");
+                    btn_intro.setImageResource(R.drawable.no);
+                    editIntro.setText(local.getIntro());
+                    editIntro.setVisibility(View.VISIBLE);
+                    introduction.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    btn_intro.setTag("edit");
+                    btn_intro.setImageResource(R.drawable.yes);
+                    local.setIntro(editIntro.getText().toString());
+                    introduction.setText(local.getIntro());
+                    db.runTransaction(new Transaction.Function<Void>() {
+                        @Override
+                        public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                            DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                            // Note: this could be done without a transaction
+                            //       by updating the population using FieldValue.increment()
+                            transaction.update(sfDocRef, "intro", local.getIntro().toString());
+                            // Success
+                            return null;
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("Log", "Transaction success!");
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("Log", "Transaction failure.", e);
+                                }
+                            });
+                    editIntro.setVisibility(View.INVISIBLE);
+                    introduction.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
         //
         mContext = this;
         //밑에 사진 띄우기

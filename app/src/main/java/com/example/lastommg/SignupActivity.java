@@ -47,6 +47,7 @@ public class SignupActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document:task.getResult()){
                         User user=document.toObject(User.class);
+                        Log.d("닉네임확인", user.getNickname());
                         userList.add(user);
                     }
                 }
@@ -73,7 +74,7 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.d("성공", uri.toString());
-                        User user= new User(email,name,nickname,uri.toString());
+                        User user= new User(email,"한줄소개를입력하세요",name,nickname,uri.toString());
                         db.collection("User").document(nickname).set(user);
                         userList.add(user);
                     }
@@ -213,6 +214,7 @@ public class SignupActivity extends AppCompatActivity {
         }
         for(i=0;i<j;i++)
         {
+            Log.d("왜안되지", userList.get(i).getNickname()+"+++++"+nickname);
             if(userList.get(i).getNickname().equals(nickname))
             {
                 Toast.makeText(SignupActivity.this, "닉네임 중복!", Toast.LENGTH_SHORT).show();

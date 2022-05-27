@@ -66,7 +66,7 @@ public class NicknameForSNSuser extends AppCompatActivity {
                 submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        User user= new User(email,name,nickname,uri.toString());
+                        User user= new User(email,"한줄소개를입력하세요",name,nickname,uri.toString());
                         db.collection("User").document(nickname).set(user);
                         userList.add(user);
                     }

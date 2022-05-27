@@ -29,11 +29,32 @@
                 android:id="@+id/email"
                 android:layout_height="50dp"
                 android:textAlignment="center" />
+            <FrameLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+                <ImageButton
+                    android:id="@+id/btn_intro"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="right"
+                    android:padding="0sp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/yes"
+                    />
+                <TextView
+                    android:id="@+id/intro"
+                    android:layout_height="50dp"
+                    android:textAlignment="center"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"/>
+                <EditText
+                    android:id="@+id/edit_intro"
+                    android:layout_height="50dp"
+                    android:layout_width="230dp"
+                    android:textAlignment="center"
+                    android:visibility="invisible"/>
+            </FrameLayout>
 
-            <TextView
-                android:id="@+id/intro"
-                android:layout_height="50dp"
-                android:textAlignment="center" />
         </TableLayout>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
