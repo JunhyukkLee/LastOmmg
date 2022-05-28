@@ -87,7 +87,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private final String TAG ="로그아웃";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    String[] REQUIRED_PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 3;
@@ -109,14 +108,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private FirebaseStorage storage;
 
     //ImageView iv_view;
-    String address;
-    String mCurrentPhotoPath;
     double latitude;
     double longitude;
     private GpsTracker gpsTracker;
     GeoPoint u_GeoPoint;
-    Uri imageUri;
-    Uri photoURI, albumURI;
     public static Object context_main;
     AccessToken accessToken = AccessToken.getCurrentAccessToken();
     boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
@@ -184,6 +179,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startActivity(intent);
             }
         });
+
         //거리순정렬
         sortDistance.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -241,45 +237,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         });
     }
 
-
-    public String getCurrentAddress(double latitude, double longitude) {
-
-        //지오코더... GPS를 주소로 변환
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
-        List<Address> addresses;
-
-        try {
-
-            addresses = geocoder.getFromLocation(
-                    latitude,
-                    longitude,
-                    7);
-        } catch (IOException ioException) {
-            //네트워크 문제
-            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
-            return "지오코더 서비스 사용불가";
-        } catch (IllegalArgumentException illegalArgumentException) {
-            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
-            return "잘못된 GPS 좌표";
-
-        }
-
-
-        if (addresses == null || addresses.size() == 0) {
-            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
-            return "주소 미발견";
-
-        }
-
-        Address address = addresses.get(0);
-        return address.getAddressLine(0).toString() + "\n";
-
-    }
-
-
-
-
     private void signOut() {
         mAuth.signOut();
         if (isLoggedIn == true) {
@@ -299,7 +256,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         //super.onBackPressed();
         backPressCloseHandler.onBackPressed();
     }
-
 
     private void changeView(int index) {
         switch (index) {
@@ -367,17 +323,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
 
         plus = (FloatingActionButton) findViewById(R.id.plus);
-        camera = (FloatingActionButton) findViewById(R.id.camera);
-        album = (FloatingActionButton) findViewById(R.id.album);
-        upload = (FloatingActionButton) findViewById(R.id.upload);
-        //iv_view = (ImageView) findViewById(R.id.iv_view);
 
         storage = FirebaseStorage.getInstance();
 
         plus.setOnClickListener((View.OnClickListener) this);
-        camera.setOnClickListener((View.OnClickListener) this);
-        album.setOnClickListener((View.OnClickListener) this);
-        upload.setOnClickListener((View.OnClickListener) this);
         //152까지
 
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -399,7 +348,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
@@ -407,41 +355,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 anim();
                 Intent post = new Intent(getApplicationContext(), PostActivity.class);
                 startActivity(post);
-                //Toast.makeText(this, "plus", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.camera:
-                anim();
-                //Toast.makeText(this, "camera", Toast.LENGTH_SHORT).show();
-                //captureCamera();
-                break;
-            case R.id.album:
-                anim();
-                //Toast.makeText(this, "album", Toast.LENGTH_SHORT).show();
-                //getAlbum();
-                break;
-            case R.id.upload:
-                anim();
-                //Toast.makeText(this, "upload", Toast.LENGTH_SHORT).show();
-                //loadAlbum();
                 break;
         }
     }
     private void anim() {
         if (isFabOpen) {
-            camera.startAnimation(fab_close);
-            camera.setClickable(false);
-            album.startAnimation(fab_close);
-            album.setClickable(false);
-            upload.startAnimation(fab_close);
-            upload.setClickable(false);
             isFabOpen = false;
         } else {
-            camera.startAnimation(fab_open);
-            camera.setClickable(true);
-            album.startAnimation(fab_open);
-            album.setClickable(true);
-            upload.startAnimation(fab_open);
-            upload.setClickable(true);
             isFabOpen = true;
         }
     }
