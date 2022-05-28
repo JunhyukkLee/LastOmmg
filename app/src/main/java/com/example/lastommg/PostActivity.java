@@ -170,14 +170,14 @@ public class PostActivity extends AppCompatActivity {
         gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent map = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(map);
-//                List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
-//                // Start the autocomplete intent.
-//                Intent intent = new Autocomplete.IntentBuilder(
-//                        AutocompleteActivityMode.OVERLAY, fields)
-//                        .build(PostActivity.this);
-//                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+//                Intent map = new Intent(getApplicationContext(), MapsActivity.class);
+//                startActivity(map);
+                List<Place.Field> fields = Arrays.asList(Place.Field.LAT_LNG, Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS);
+                // Start the autocomplete intent.
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.OVERLAY, fields)
+                        .build(PostActivity.this);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
             }
         });
     }
