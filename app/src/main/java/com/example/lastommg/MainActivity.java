@@ -95,19 +95,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ItemAdapter itemAdapter;
     AlbumAdapter mAlbumAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String[] PERMISSIONS = {
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-    };
 
     private Animation fab_open, fab_close;
     private Boolean isFabOpen = false;
-    private FloatingActionButton plus, camera, album, upload;
+    private FloatingActionButton plus;
     private FirebaseStorage storage;
 
-    //ImageView iv_view;
+    ImageView iv_view;
     double latitude;
     double longitude;
     private GpsTracker gpsTracker;

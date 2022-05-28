@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/imgBanner1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="600dp"
             android:background="#ffcccc"
             android:contentDescription="@string/app_name" />
 
@@ -22,12 +22,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:layout_below="@+id/imgBanner1"
             android:text="Hello This is Page 1"
-            android:textColor="@android:color/white"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
-
     </RelativeLayout>
 </FrameLayout>
