@@ -107,6 +107,8 @@
         <activity android:name=".MypageActivity" />
         <activity android:name=".LoginActivity1" />
         <activity android:name=".NicknameForSNSuser" />
+        <activity android:name=".FacebookUserInfo"></activity>
+
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

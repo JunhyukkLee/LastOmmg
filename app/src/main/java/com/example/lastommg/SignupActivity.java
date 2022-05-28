@@ -267,15 +267,12 @@ public class SignupActivity extends AppCompatActivity {
         super.onDestroy();
         FirebaseUser user = mAuth.getCurrentUser();
 
-        if(user != null)
-            deleteUser();
 
     }
     /*
     @Override
     protected void onStop() {
         super.onStop();
-        FirebaseUser user = mAuth.getCurrentUser();
 
         if(user != null)
             deleteUser();
