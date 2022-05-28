@@ -158,6 +158,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadImage();
+                finish();
             }
         });
 
@@ -309,7 +310,6 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             address = getCurrentAddress(s_GeoPoint.getLatitude(), s_GeoPoint.getLongitude());
-                            Toast.makeText(PostActivity.this, "현재위치 \n위도 " + latitude + "\n경도 " + longitude, Toast.LENGTH_LONG).show();
                             Item item = new Item(0, nickName.getNickname(), name.getText().toString(), description.getText().toString(), uri.toString(), phoneNumber.getText().toString(), s_GeoPoint, address, 0.0, timestamp);
                             itemAdapter.addItem(item);
                             if (item.getNickname().equals(nickName.getNickname())) {
@@ -404,7 +404,7 @@ public class PostActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        locate.setText(place.getName());
+                        locate.setText(place.getAddress());
                         s_GeoPoint = new GeoPoint(latitude2, longitude2);
                         Log.i(TAG, "지오포인트" + s_GeoPoint.getLatitude() + "," + s_GeoPoint.getLongitude());
 
