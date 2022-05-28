@@ -1,5 +1,6 @@
 package com.example.lastommg;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Debug;
@@ -18,6 +19,8 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -28,6 +31,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.json.JSONException;
 //
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView profileImage;
     private static final String TAG = "LoginActivity";
     private FirebaseAuth mAuth;
+    public String facebook_name;
+    public String facebook_email;
+    public static Context context5;
+
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -42,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        context5 = this;
         AppEventsLogger.activateApp(getApplication());
         //login_K = findViewById(R.id.loginK); //카카오로그인
         //logout_K = findViewById(R.id.logoutK);
@@ -69,22 +79,48 @@ public class LoginActivity extends AppCompatActivity {
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = findViewById(R.id.loginF);
         loginButton.setPermissions("email", "public_profile");
+        // Callback registration
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
+
+            public void onSuccess(LoginResult login_result) {
+                handleFacebookAccessToken(login_result.getAccessToken());
+                final Profile profile = Profile.getCurrentProfile();
+
+                GraphRequest request = GraphRequest.newMeRequest(
+                        login_result.getAccessToken(),
+                        (object, response) -> {
+                            try {
+                                Intent intent = new Intent(LoginActivity.this, FacebookUserInfo.class);
+                                Log.d("이름",object.getString("name"));
+                                facebook_name=object.getString("name");
+                                facebook_email=object.getString("email");
+                                Log.d("아이디",object.getString("id"));
+                                Log.d("email",object.getString("email"));
+                                startActivity(intent);
+
+
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name, birthday,picture,email");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
             public void onCancel() {
-
+                // code for cancellation
             }
 
             @Override
-            public void onError(FacebookException error) {
-
+            public void onError(FacebookException exception) {
+                //  code to handle error
             }
         });
 
