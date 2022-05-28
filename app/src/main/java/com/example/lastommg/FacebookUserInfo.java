@@ -77,6 +77,7 @@ public class FacebookUserInfo extends AppCompatActivity {
                     Log.d("실패","응 실패야",task.getException());
                 }
             }
+
         });
 
 
