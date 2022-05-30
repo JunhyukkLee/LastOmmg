@@ -23,6 +23,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +96,8 @@ public class PostActivity extends AppCompatActivity {
     RecyclerView p_recyclerView;
     ItemAdapter itemAdapter;
 
+    ProgressDialog progressDialog;
+
     public static Context p_context;
 
     private static final int AUTOCOMPLETE_REQUEST_CODE = 1111;
@@ -158,16 +161,9 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uploadImage();
-                finish();
             }
         });
 
-        locate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,6 +269,7 @@ public class PostActivity extends AppCompatActivity {
         Uri file = null;
         App nickName = (App) getApplicationContext();
 
+        progressDialog = new ProgressDialog(PostActivity.this);
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         Timestamp timestamp = new Timestamp(new Date());
         String imageFileName = "JPEG" + timeStamp + "jpg";
@@ -286,7 +283,6 @@ public class PostActivity extends AppCompatActivity {
         }
 
         uploadTask = filereference.putFile(file);
-        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Posting");
         progressDialog.show();
 
@@ -325,9 +321,11 @@ public class PostActivity extends AppCompatActivity {
                         }
                     });
                 }
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
                 itemAdapter.notifyDataSetChanged();
                 Toast.makeText(PostActivity.this, "사진 업로드가 성공하였습니다.", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
                 p_recyclerView.startLayoutAnimation();
             }
         });
@@ -405,6 +403,7 @@ public class PostActivity extends AppCompatActivity {
                         }
 
                         locate.setText(place.getAddress());
+                        name.setText(place.getName());
                         s_GeoPoint = new GeoPoint(latitude2, longitude2);
                         Log.i(TAG, "지오포인트" + s_GeoPoint.getLatitude() + "," + s_GeoPoint.getLongitude());
 
