@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.LastOmmg" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,9 +13,31 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+<!--        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+<!--        <item name="android:statusBarColor">@color/light_orange</item>-->
+<!--        <item name="android:navigationBarColor">@color/light_orange</item>-->
+<!--        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>-->
+<!--        <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>-->
     </style>
-
+    <style name="YourAppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+    <!--액션바 없앨때-->
+    <style name="NoMenuBarTheme" parent="Theme.AppCompat.NoActionBar">
+    </style>
+    <!--상단 status바 투명-->
+<!--    <style name="Theme.TransparentStatusBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">-->
+<!--        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>-->
+<!--        <item name="android:statusBarColor">@color/light_orange</item>-->
+<!--        <item name="android:navigationBarColor">@color/light_orange</item>-->
+<!--        <item name="android:enforceNavigationBarContrast" tools:targetApi="q">false</item>-->
+<!--        <item name="android:enforceStatusBarContrast" tools:targetApi="q">false</item>-->
+<!--    </style>-->
     <style name="SplashActivityTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/b</item>
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
 </resources>

@@ -1,32 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="680dp"
+        android:layout_height="@dimen/frameSize"
         android:orientation="vertical">
-        <!--        android:layout_marginLeft="@dimen/pageMarginAndOffset"-->
-        <!--        android:layout_marginRight="@dimen/pageMarginAndOffset"-->
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/imgBanner1"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:background="#ffcccc"
-            android:contentDescription="@string/app_name" />
+            android:layout_height="match_parent"
+            android:background="#B3000000"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/tvName1"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/imgBanner1"
-            android:text="Hello This is Page 1"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="@dimen/vignette"
+            android:layout_alignParentBottom="true"
+            android:background="#33000000"
+            android:elevation="1dp">
+
+            <TextView
+                android:id="@+id/tvName1"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="40dp"
+                android:breakStrategy="balanced"
+                android:shadowColor="#B3000000"
+                android:shadowDx="3.0"
+                android:shadowDy="3.0"
+                android:shadowRadius="2.0"
+
+                android:textAlignment="textEnd"
+                android:textColor="#ffffff"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toLeftOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
 </FrameLayout>

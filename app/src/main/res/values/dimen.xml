@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pageMargin">20dp</dimen>
+    <dimen name="offset">20dp</dimen>
+    <dimen name="pageMarginAndOffset">20dp</dimen>
+    <!--바꾸기-->
+    <dimen name="frameSize">680dp</dimen>
+    <dimen name="vignette">300dp</dimen>
+</resources>

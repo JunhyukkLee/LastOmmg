@@ -19,7 +19,7 @@
     </queries>
 
     <application
-        android:name=".App"
+        android:name=".Login.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -46,14 +46,6 @@
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".PostActivity"
-            android:exported="false" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.lastommg"
@@ -71,44 +63,11 @@
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-        <activity
-            android:name="com.facebook.CustomTabActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+        <activity android:name=".Login.LoginActivity1" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+        <activity android:name=".Login.NicknameForSNSuser" />
 
-                <data android:scheme="@string/fb_login_protocol_scheme" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".DetailActivity" />
-        <activity
-            android:name=".MainActivity3"
-            android:exported="true"></activity>
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/SplashActivityTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".SignupActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".MypageActivity" />
-        <activity android:name=".LoginActivity1" />
-        <activity android:name=".NicknameForSNSuser" />
-        <activity android:name=".FacebookUserInfo"></activity>
-
+        <activity android:name=".Login.FacebookUserInfo"></activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
@@ -129,6 +88,58 @@
                     android:scheme="kakao19516a68e965371a0bd3fd30eb88a487" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+<!--여기서부터000000000000000000000000000000000000000000000000000000000000000000000000-->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/SplashActivityTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"></action>
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Login.MainActivity3" android:exported="true"/>
+
+        <activity android:name=".Login.SignupActivity" />
+
+        <activity android:name=".Login.LoginActivity" />
+
+        <activity android:name=".MainActivity"/>
+
+        <activity
+            android:name=".SecondTab.Upload.MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+
+        <activity
+            android:name=".SecondTab.Upload.PostActivity"
+            android:exported="false" />
+
+        <activity android:name=".MyPage.DetailActivity" />
+
+        <activity android:name=".MyPage.MypageActivity" />
+
+
     </application>
 
 </manifest>

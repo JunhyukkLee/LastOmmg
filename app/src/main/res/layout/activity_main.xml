@@ -10,12 +10,12 @@
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="680dp">
+        android:layout_height="670dp">
         <!--희찬-->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="680dp"
+            android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false" >
         </androidx.viewpager2.widget.ViewPager2>
@@ -29,7 +29,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="680dp"
+            android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:layoutAnimation="@anim/item_layout_animation"
@@ -90,7 +90,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -98,14 +98,14 @@
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/firstTab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="OMMG" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/secondTab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="HI" />
 
 

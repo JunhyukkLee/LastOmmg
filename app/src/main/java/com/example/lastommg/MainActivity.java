@@ -1,84 +1,58 @@
 package com.example.lastommg;
 
-import static android.view.View.GONE;
-
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.Settings;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.lastommg.FirstTab.MyAdapter;
+import com.example.lastommg.Login.App;
+import com.example.lastommg.Login.LoginActivity;
+import com.example.lastommg.Login.User;
+import com.example.lastommg.MyPage.AlbumAdapter;
+import com.example.lastommg.MyPage.MypageActivity;
+import com.example.lastommg.SecondTab.GpsTracker;
+import com.example.lastommg.SecondTab.Item;
+import com.example.lastommg.SecondTab.ItemAdapter;
+import com.example.lastommg.SecondTab.Upload.PostActivity;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.ktx.Firebase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.kakao.auth.authorization.AuthorizationResult;
-import com.kakao.network.ErrorResult;
-import com.kakao.sdk.user.UserApiClient;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
-import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 
-import java.io.File;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
-import kotlin.Unit;
-import kotlin.jvm.functions.Function1;
+import io.grpc.internal.DnsNameResolver;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     public static final AuthorizationResult.RESULT_CODE SUCCESS = null;
@@ -90,6 +64,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 3;
+
     public RecyclerView recyclerView;
     private View yoon;
     private ItemAdapter itemAdapter;
@@ -115,6 +90,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         App local = (App) getApplicationContext();
         db.collection("User").whereEqualTo("id", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -278,7 +254,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mPager.setAdapter(pagerAdapter);
         //ViewPager Setting
         mPager.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
-        mPager.setCurrentItem(1000);
+        mPager.setCurrentItem(500);
         mPager.setOffscreenPageLimit(3);
         //Change in position -> change in view page
         mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {

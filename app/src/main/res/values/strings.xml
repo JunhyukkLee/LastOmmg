@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyPageComplete</string>
+    <string name="app_name">OmmG</string>
     //페이스북관련
     <string name="facebook_app_id">897057934317078</string>
     <string name="fb_login_protocol_scheme">fb897057934317078</string>

@@ -14,13 +14,10 @@
         android:layout_weight="1" />
     <ImageButton
         android:id="@+id/good"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:padding="0sp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:scaleType="centerCrop"
-       />
-
-
+        android:backgroundTint="#ffffff"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -57,7 +54,7 @@
             android:id="@+id/image_profile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-             />
+            android:scaleType="fitXY" />
 
         <EditText
             android:id="@+id/add_comment"
