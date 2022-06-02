@@ -72,6 +72,7 @@ public class FacebookUserInfo extends AppCompatActivity {
                     for(QueryDocumentSnapshot document:task.getResult()){
                         User user=document.toObject(User.class);
                         userList2.add(user);
+                        checkNick();
                     }
                 }
                 else
@@ -81,6 +82,7 @@ public class FacebookUserInfo extends AppCompatActivity {
             }
 
         });
+
 
 
 
@@ -96,6 +98,8 @@ public class FacebookUserInfo extends AppCompatActivity {
     private void checkNick(){
         int j=getUserCount();
         int i;
+        Log.d("제이는 ", String.valueOf(j));
+
         if(j==0)
         {//유저가 없을때 , 없으므로 닉네임 생성
             Toast.makeText(FacebookUserInfo.this, "사용가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
@@ -104,11 +108,10 @@ public class FacebookUserInfo extends AppCompatActivity {
         }
         for(i=0;i<j;i++)
         {
-            if(userList2.get(i).getNickname().equals(nickname))
+            if(userList2.get(i).getId().equals(profile_email))
             {//해당 닉네임이 이미 존재 -> 페북 닉네임이 존재  메인으로 이동
                 Log.d("페북 닉 존재","메인으로 이동");
-                Intent intent = new Intent(FacebookUserInfo.this, MainActivity.class);
-                startActivity(intent);
+
                 break;
             }
             if(i==(j-1)){//없으므로 닉네임 생성

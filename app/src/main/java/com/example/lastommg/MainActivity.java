@@ -92,11 +92,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
 
         App local = (App) getApplicationContext();
+
+        Log.d("좃같다","ㅇㅇㅇㅇ");
         db.collection("User").whereEqualTo("id", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document:task.getResult()){
+                        Log.d("들어오기 성공","ㅉ");
                         User user=document.toObject(User.class);
                         local.setNickname(user.getNickname());
                         local.setPro_img(user.getPro_img());
@@ -104,6 +107,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         local.setIntro(user.getIntro());
                         Log.d("uri세팅", local.getPro_img());
                         Log.d("닉네임세팅", local.getNickname());
+                        Log.d("에미일 세팅",local.getEmail());
                     }
                 }
                 else
@@ -112,7 +116,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
             }
         });
-        Log.d("이메일", user.getEmail());
+
 
         mAlbumAdapter = new AlbumAdapter();
         gpsTracker = new GpsTracker(MainActivity.this);
