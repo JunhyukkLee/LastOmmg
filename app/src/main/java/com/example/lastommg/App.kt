@@ -9,6 +9,9 @@ class App : Application() {
     private var pro_img: String?=null
     private var email: String?=null
     private var intro: String?=null
+    private var uid: String?=null
+
+
     companion object{
         var instance : App? = null
 
@@ -33,6 +36,12 @@ class App : Application() {
     }
     fun getNickname(): String? {
         return nickname
+    }
+    fun getUid(): String? {
+        return uid
+    }
+    fun setUid(uid: String): String? {
+        return uid
     }
 
     fun setNickname(nickname: String?) {

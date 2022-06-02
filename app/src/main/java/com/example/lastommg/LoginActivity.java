@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public String facebook_name;
     public String facebook_email;
+
     public static Context context5;
 
     private CallbackManager mCallbackManager;

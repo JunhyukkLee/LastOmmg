@@ -10,6 +10,9 @@ public class User {
     private String nickname;
     private String pro_img;
     private String intro;
+    private String uid;
+
+
 
     public User(String id, String intro,String username, String nickname,String pro_img) {
         this.id = id;
@@ -17,6 +20,7 @@ public class User {
         this.nickname = nickname;
         this.pro_img=pro_img;
         this.intro=intro;
+        this.uid=uid;
     }
 
     public User() {
@@ -28,6 +32,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getUsername() {
