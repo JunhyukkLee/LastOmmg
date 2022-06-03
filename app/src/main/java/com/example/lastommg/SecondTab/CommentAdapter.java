@@ -64,7 +64,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView image_profile;
         public TextView username, ccomment;
-        App local;
         Uri profileUri;
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -78,29 +77,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             username.setText(comment.getName());
             ccomment.setText(comment.getComment());
             //원래코드
-            image_profile.setImageResource(R.drawable.yes);
-            //내사진으로 로컬로 바꾸기
-//            local = (App) mContext.getApplicationContext();
-//            profileUri = Uri.parse(local.getPro_img());
-//            Glide.with(mContext).load(profileUri).into(image_profile);
-            //동적할당,,시도
-//            db.collection("user").document(mitem.getName()).collection("Comment").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                @Override
-//                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                    if(task.isSuccessful()){
-//                        for(QueryDocumentSnapshot document:task.getResult()){
-//                            Comment comment = document.toObject(Comment.class);
-//                            mCommentAdapter.addComment(comment);
-//                            Log.d("확인",document.getId()+"=>"+document.getData());
-//                        }
-//                    }
-//                    else
-//                    {
-//                        Log.d("실패","응 실패야",task.getException());
-//                    }
-//                }
-//            });
+            profileUri = Uri.parse(comment.getProfile_img());
+            Log.d("댓글사진", profileUri.toString());
+            Glide.with(mContext).load(profileUri).into(image_profile);
         }
-
     }
 }

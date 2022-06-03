@@ -137,7 +137,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Comment comment = new Comment(add_comment.getText().toString(),local.getNickname());
+                Comment comment = new Comment(add_comment.getText().toString(),local.getNickname(),local.getPro_img());
                 Log.d("id확인",local.getNickname());
                 commentAdapter.addComment(comment);
                 db.collection("items").document(name).collection("Comment").document(add_comment.getText().toString()).set(comment);
