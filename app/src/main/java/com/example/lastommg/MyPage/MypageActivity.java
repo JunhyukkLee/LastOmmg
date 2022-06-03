@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.lastommg.SecondTab.Comment;
 import com.example.lastommg.SecondTab.Item;
 import com.example.lastommg.Login.App;
 import com.example.lastommg.R;
@@ -44,6 +45,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.Serializable;
 
@@ -51,8 +54,9 @@ import java.io.Serializable;
 public class MypageActivity extends AppCompatActivity implements AlbumAdapter.OnItemClickListener, Serializable, View.OnClickListener {
     UploadTask uploadTask;
     private Context mContext;
-    private RecyclerView my_album;
+    private RecyclerView my_album,my_scrap;
     private AlbumAdapter mAlbumAdapter;
+    ScrapAdapter scrapAdapter;
     StorageReference storageReference;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth;
@@ -71,6 +75,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         Log.d("유알아이", local.getPro_img());
         storageReference = FirebaseStorage.getInstance().getReference();
         mAlbumAdapter = new AlbumAdapter();
+        scrapAdapter=new ScrapAdapter();
         mAuth = FirebaseAuth.getInstance();
         //프로필 이미지 띄우기(동그랗게)
         Uri a;
@@ -139,6 +144,25 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         mContext = this;
         //밑에 사진 띄우기
         init();
+        scrap();
+        TextView text_scrap=findViewById(R.id.myscrap);
+        TextView text_item=findViewById(R.id.myitem);
+        text_scrap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                my_album.setVisibility(View.INVISIBLE);
+                my_scrap.setVisibility(View.VISIBLE);
+                scrapAdapter.notifyDataSetChanged();
+            }
+        });
+        text_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                my_album.setVisibility(View.VISIBLE);
+                my_scrap.setVisibility(View.INVISIBLE);
+                mAlbumAdapter.notifyDataSetChanged();
+            }
+        });
 
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -149,6 +173,23 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                         if(item.getNickname().equals(local.getNickname())) {
                             mAlbumAdapter.addItem(item);
                         }
+                        Log.d("확인",document.getId()+"=>"+document.getData());
+                    }
+                }
+                else
+                {
+                    Log.d("실패","응 실패야",task.getException());
+                }
+            }
+        });
+        db.collection("User").document(local.getNickname()).collection("Scrap").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document:task.getResult()){
+                        Item item=document.toObject(Item.class);
+                            scrapAdapter.addScrap(item);
+
                         Log.d("확인",document.getId()+"=>"+document.getData());
                     }
                 }
@@ -324,7 +365,13 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                 .show();
     }
 
-
+    private void scrap() {
+        my_scrap = findViewById(R.id.my_scrap);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(mContext, 3);
+        my_scrap.setLayoutManager(mLayoutManager);
+        my_scrap.addItemDecoration(new ItemDecoration(this));
+        my_scrap.setAdapter(scrapAdapter);
+    }
 
     //밑에 사진 그리드 띄우기/////////////////////////////////////////////////////////////////////////////////////////
 

@@ -24,6 +24,7 @@ import com.example.lastommg.Login.LoginActivity;
 import com.example.lastommg.Login.User;
 import com.example.lastommg.MyPage.AlbumAdapter;
 import com.example.lastommg.MyPage.MypageActivity;
+import com.example.lastommg.MyPage.ScrapAdapter;
 import com.example.lastommg.SecondTab.GpsTracker;
 import com.example.lastommg.SecondTab.Item;
 import com.example.lastommg.SecondTab.ItemAdapter;
@@ -119,6 +120,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 
         mAlbumAdapter = new AlbumAdapter();
+
         gpsTracker = new GpsTracker(MainActivity.this);
         latitude = gpsTracker.getLatitude();
         longitude = gpsTracker.getLongitude();

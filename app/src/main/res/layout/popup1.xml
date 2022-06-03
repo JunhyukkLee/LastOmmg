@@ -12,12 +12,32 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-    <ImageButton
-        android:id="@+id/good"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerCrop"
-        android:backgroundTint="#ffffff"/>
+    <RelativeLayout
+        android:id="@+id/three_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:padding="4dp">
+
+        <ImageButton
+            android:id="@+id/good"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="#ffffff"
+            android:scaleType="centerCrop" />
+        <ImageButton
+            android:id="@+id/scrap"
+            android:layout_toRightOf="@id/good"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="#ffffff"
+            android:layout_marginLeft="30dp"
+            android:scaleType="centerCrop" />
+
+
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,6 +47,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
 
     </ScrollView>
     <ScrollView
