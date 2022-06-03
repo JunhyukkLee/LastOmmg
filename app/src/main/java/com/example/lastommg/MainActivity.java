@@ -95,7 +95,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         App local = (App) getApplicationContext();
 
         Log.d("좃같다","ㅇㅇㅇㅇ");
-        db.collection("User").whereEqualTo("id", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("User").whereEqualTo("uid", user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
