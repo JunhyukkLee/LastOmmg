@@ -62,6 +62,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private final String TAG ="로그아웃";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    Button sortDistance, sortTime, logoutb, mypageb;
+
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 3;
@@ -131,28 +133,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mAuth = FirebaseAuth.getInstance();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-        Button sortDistance = findViewById((R.id.sortdistance));
-        Button sortTime = findViewById((R.id.sorttime));
-        Button logoutb = findViewById((R.id.logoutbt));
-        Button loginb = findViewById((R.id.loginbt));
-        Button mypageb = findViewById(R.id.mypage_button);
+        sortDistance = findViewById((R.id.sortdistance));
+        sortTime = findViewById((R.id.sorttime));
+        logoutb = findViewById((R.id.logoutbt));
+        mypageb = findViewById(R.id.mypage_button);
+
         logoutb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 signOut();
                 Intent intent3 = new Intent(MainActivity.this, LoginActivity.class);
                 //로그아웃누르면  로그인화면으로 이동
                 startActivity(intent3);
 
-            }
-        });
-
-        loginb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -189,9 +182,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         firstView();
         secondView();
         //2번 탭 구성요소 가리기
+
         yoon.setVisibility((View.INVISIBLE));
         recyclerView.setVisibility(View.INVISIBLE);
         swipeRefreshLayout.setVisibility((View.INVISIBLE));
+        sortDistance.setVisibility(View.INVISIBLE);
+        sortTime.setVisibility(View.INVISIBLE);
+        logoutb.setVisibility(View.INVISIBLE);
+        mypageb.setVisibility(View.INVISIBLE);
         //Tab implant
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -223,7 +221,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             public void onCompleteLogout() {
                 FirebaseAuth.getInstance().signOut();
                 Log.d(TAG,"kakao logout");
-
             }
         });
     }
@@ -240,6 +237,10 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 recyclerView.setVisibility(View.INVISIBLE);
                 yoon.setVisibility((View.INVISIBLE));
                 swipeRefreshLayout.setVisibility((View.INVISIBLE));
+                sortDistance.setVisibility(View.INVISIBLE);
+                sortTime.setVisibility(View.INVISIBLE);
+                logoutb.setVisibility(View.INVISIBLE);
+                mypageb.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 recyclerView.setVisibility(View.VISIBLE);
@@ -248,12 +249,18 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mPager.setVisibility(View.INVISIBLE);
                 itemAdapter.notifyDataSetChanged();
                 recyclerView.startLayoutAnimation();
+                sortDistance.setVisibility(View.VISIBLE);
+                sortTime.setVisibility(View.VISIBLE);
+                logoutb.setVisibility(View.VISIBLE);
+                mypageb.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
     private void firstView() {
         //ViewPager2
+
+
         mPager = findViewById(R.id.viewpager);
         //Adapter
         pagerAdapter = new MyAdapter(this, num_page);
@@ -275,6 +282,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void secondView() {
+        sortDistance.setVisibility(View.VISIBLE);
+        sortTime.setVisibility(View.VISIBLE);
+        logoutb.setVisibility(View.VISIBLE);
+        mypageb.setVisibility(View.VISIBLE);
+
         recyclerView = findViewById(R.id.recycler_view);
         itemAdapter = new ItemAdapter();
         recyclerView.setAdapter(itemAdapter);
