@@ -106,9 +106,11 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                         local.setPro_img(user.getPro_img());
                         local.setEmail(user.getId());
                         local.setIntro(user.getIntro());
+                        local.setName(user.getUsername());
+
                         Log.d("uri세팅", local.getPro_img());
                         Log.d("닉네임세팅", local.getNickname());
-                        Log.d("에미일 세팅",local.getEmail());
+                        Log.d("이름 세팅",local.getName());
                     }
                 }
                 else
@@ -321,6 +323,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
             }
         });
+
 
     }
 
