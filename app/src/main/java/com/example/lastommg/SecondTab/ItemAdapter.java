@@ -135,6 +135,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         recyclerView.setAdapter(commentAdapter);
         EditText add_comment=view.findViewById(R.id.add_comment);
         TextView post=view.findViewById(R.id.post);
+        final DocumentReference sfDocRef = db.collection("items").document(name);
+        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(local.getNickname());
+        DocumentReference docRef_scrap = db.collection("items").document(name).collection("Scrap").document(local.getNickname());
+        DocumentReference docRef_user = db.collection("User").document(local.getNickname()).collection("Scrap").document(name);
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +146,29 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 Log.d("id확인",local.getNickname());
                 commentAdapter.addComment(comment);
                 db.collection("items").document(name).collection("Comment").document(add_comment.getText().toString()).set(comment);
+                db.runTransaction(new Transaction.Function<Void>() {
+                    @Override
+                    public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                        DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                        // Note: this could be done without a transaction
+                        //       by updating the population using FieldValue.increment()
+                        double newcomment = snapshot.getDouble("comment") + 1;
+                        transaction.update(sfDocRef, "comment", newcomment);
+                        // Success
+                        return null;
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Transaction success!");
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Transaction failure.", e);
+                            }
+                        });
                 add_comment.setText(null);
                 commentAdapter.notifyDataSetChanged();
             }
@@ -169,10 +196,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         ImageView imageView = view.findViewById(R.id.imageView);
         ImageButton good = view.findViewById(R.id.good);
         ImageButton scrap = view.findViewById(R.id.scrap);
-        final DocumentReference sfDocRef = db.collection("items").document(name);
-        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(local.getNickname());
-        DocumentReference docRef_scrap = db.collection("items").document(name).collection("Scrap").document(local.getNickname());
-        DocumentReference docRef_user = db.collection("User").document(local.getNickname()).collection("Scrap").document(name);
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

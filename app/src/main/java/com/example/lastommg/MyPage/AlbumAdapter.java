@@ -48,7 +48,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Item item = myItems.get(position);
-        myItem myItem= new myItem(item.getGood(),item.getScrap(),item.getNickname(),item.getName(),item.getDecripthion(), item.getUri(), item.getPhoneNumber(), item.getLat(),item.getLon(),item.getAddress(),item.getDistance(),item.getTimestamp().toString());
+        myItem myItem= new myItem(item.getGood(),item.getComment(),item.getScrap(),item.getNickname(),item.getName(),item.getDecripthion(), item.getUri(), item.getPhoneNumber(), item.getLat(),item.getLon(),item.getAddress(),item.getDistance(),item.getTimestamp().toString());
         Glide.with(mContext)
                 .load(item.getUri())
                 .thumbnail(0.5f)

@@ -11,6 +11,7 @@ import java.io.Serializable;
 public class Item implements Serializable {
 
     int good=0;
+    int comment=0;
     int scrap=0;
     String nickname;
     String decripthion;
@@ -25,9 +26,10 @@ public class Item implements Serializable {
 
     }
 
-    public Item(int good,int scrap,String nickname,String name,String decripthion, String uri, String phoneNumber,GeoPoint geoPoint,String address,double distance,Timestamp timestamp)  {
+    public Item(int good,int comment,int scrap,String nickname,String name,String decripthion, String uri, String phoneNumber,GeoPoint geoPoint,String address,double distance,Timestamp timestamp)  {
        // this.resId = resId;
         this.good=good;
+        this.comment=comment;
         this.scrap=scrap;
         this.nickname=nickname;
         this.decripthion=decripthion;
@@ -45,6 +47,12 @@ public class Item implements Serializable {
     }
     public void setGood(int good) {
         this.good=good;
+    }
+    public int getComment() {
+        return comment;
+    }
+    public void setComment(int comment) {
+        this.comment=comment;
     }
     public int getScrap() {
         return scrap;
