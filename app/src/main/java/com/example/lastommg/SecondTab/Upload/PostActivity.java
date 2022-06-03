@@ -292,7 +292,7 @@ public class PostActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             address = getCurrentAddress(s_GeoPoint.getLatitude(), s_GeoPoint.getLongitude());
-                            Item item = new Item(0, nickName.getNickname(), name.getText().toString(), description.getText().toString(), uri.toString(), phoneNumber.getText().toString(), s_GeoPoint, address, 0.0, timestamp);
+                            Item item = new Item(0,0,0, nickName.getNickname(), name.getText().toString(), description.getText().toString(), uri.toString(), phoneNumber.getText().toString(), s_GeoPoint, address, 0.0, timestamp);
                             itemAdapter.addItem(item);
                             if (item.getNickname().equals(nickName.getNickname())) {
                                 mAlbumAdapter.addItem(item);
