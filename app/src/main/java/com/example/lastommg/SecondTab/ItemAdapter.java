@@ -15,7 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,6 +59,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     AlertDialog dialog;
     static String TAG = "Adapter";
     int index = 0;
+    int position = 0;
 
     @NonNull
     @Override
@@ -167,6 +170,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         ImageView imageView = view.findViewById(R.id.imageView);
         ImageButton good = view.findViewById(R.id.good);
+
         final DocumentReference sfDocRef = db.collection("items").document(name);
         DocumentReference docRef = db.collection("items").document(name).collection("Good").document(local.getNickname());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -265,7 +269,28 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 }
             }
         });
-
+        ImageButton commentBtn = view.findViewById(R.id.commentBtn);
+        LinearLayout commentView = view.findViewById(R.id.comment_box);
+        ScrollView infoView = view.findViewById(R.id.info_box);
+        commentView.setVisibility(View.INVISIBLE);
+        infoView.setVisibility(View.VISIBLE);
+        commentBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                switch (position){
+                    case 0:
+                        commentView.setVisibility(View.VISIBLE);
+                        infoView.setVisibility(View.INVISIBLE);
+                        position = 1;
+                        break;
+                    case 1:
+                        commentView.setVisibility(View.INVISIBLE);
+                        infoView.setVisibility(View.VISIBLE);
+                        position = 0;
+                        break;
+                }
+            }
+        });
         TextView textView = view.findViewById(R.id.textView);
         Glide.with(context).load(u).into(imageView);
 

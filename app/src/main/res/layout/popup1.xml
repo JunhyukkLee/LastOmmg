@@ -4,81 +4,95 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:weightSum="3">
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-    <ImageButton
-        android:id="@+id/good"
-        android:layout_width="50dp"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"/>
+    <!--버튼들-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:scaleType="centerCrop"
-        android:backgroundTint="#ffffff"/>
-    <ScrollView
+
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/good"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:backgroundTint="#ffffff"/>
+        <ImageButton
+            android:id="@+id/commentBtn"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:backgroundTint="#ffffff"/>
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-        <TextView
-            android:id="@+id/textView"
+        android:layout_height="380dp">
+        <!--정보들-->
+        <ScrollView
+            android:id="@+id/info_box"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        >
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24"/>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/comment_box"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/bottom" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--댓글띄우는 곳-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_above="@id/bottom"/>
+            <RelativeLayout
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="#fff"
+                android:padding="4dp">
 
-    </ScrollView>
-    <RelativeLayout
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#fff"
-        android:padding="4dp">
+                <ImageView
+                    android:id="@+id/image_profile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="fitXY" />
 
-        <ImageView
-            android:id="@+id/image_profile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY" />
+                <EditText
+                    android:id="@+id/add_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toLeftOf="@id/post"
+                    android:layout_toRightOf="@id/image_profile"
+                    android:background="@android:color/transparent" />
 
-        <EditText
-            android:id="@+id/add_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_toLeftOf="@id/post"
-            android:layout_toRightOf="@id/image_profile"
-            android:background="@android:color/transparent"
-             />
-
-        <TextView
-            android:id="@+id/post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="5dp"
-            android:text="입력" />
-
-    </RelativeLayout>
-
-
+                <TextView
+                    android:id="@+id/post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="5dp"
+                    android:text="입력" />
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
 
