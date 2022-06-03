@@ -26,13 +26,14 @@
             android:layout_height="50dp"
             android:backgroundTint="#ffffff"
             android:scaleType="centerCrop" />
+
         <ImageButton
             android:id="@+id/scrap"
-            android:layout_toRightOf="@id/good"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:backgroundTint="#ffffff"
             android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/good"
+            android:backgroundTint="#ffffff"
             android:scaleType="centerCrop" />
 
 

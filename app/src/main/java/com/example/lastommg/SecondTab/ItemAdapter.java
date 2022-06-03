@@ -79,17 +79,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         RelativeLayout parentLayout;
+        TextView gcount,ccount,scount;
         Uri u;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.b_image);
             parentLayout = itemView.findViewById(R.id.parentLayout);
+            gcount=itemView.findViewById(R.id.goodcount);
+            ccount=itemView.findViewById(R.id.commentcount);
+            scount=itemView.findViewById(R.id.scrapcount);
         }
 
         public void setItem(Item item) {
             u = Uri.parse(item.getUri());
             Glide.with(context).load(u).into(imageView);
+            gcount.setText(String.valueOf(item.getGood()));
+            ccount.setText(String.valueOf(item.getComment()));
+            scount.setText(String.valueOf(item.getScrap()));
+
         }
     }
 
