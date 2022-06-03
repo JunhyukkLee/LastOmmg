@@ -6,28 +6,14 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        tools:layout_editor_absoluteY="0dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/myitem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="5dp"
-            android:text="내게시물" />
 
-        <TextView
-            android:id="@+id/myscrap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="5dp"
-            android:text="스크랩" />
         <com.example.lastommg.MyPage.RoundImageView
             android:id="@+id/round_profile_image"
             android:layout_width="150dp"
@@ -47,9 +33,11 @@
                 android:id="@+id/email"
                 android:layout_height="50dp"
                 android:textAlignment="center" />
+
             <FrameLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
                 <ImageButton
                     android:id="@+id/btn_intro"
                     android:layout_width="25dp"
@@ -57,14 +45,14 @@
                     android:layout_gravity="right"
                     android:padding="0sp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/yes"
-                    />
+                    android:src="@drawable/yes" />
+
                 <TextView
                     android:id="@+id/intro"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:textAlignment="center"
-                    android:visibility="visible"
-                    android:layout_width="match_parent"/>
+                    android:visibility="visible" />
 
                 <EditText
                     android:id="@+id/edit_intro"
@@ -73,55 +61,64 @@
                     android:textAlignment="center"
                     android:visibility="invisible" />
             </FrameLayout>
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/firstTab"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="OMMG" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/secondTab"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="HI" />
-
-
-            </com.google.android.material.tabs.TabLayout>
         </TableLayout>
-
     </LinearLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_album"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="166dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:overScrollMode="never"
-        android:scrollbars="none" />
+        android:layout_marginTop="150dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/mypage_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_scrap"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="166dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:overScrollMode="never"
-        android:scrollbars="none" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/mpFirstTab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="게시물" />
 
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/mpSecondTab"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="저장한 사진" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_album"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_scrap"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

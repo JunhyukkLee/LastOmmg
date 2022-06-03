@@ -14,27 +14,25 @@
     <!--버튼들-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-
+        android:layout_height="40dp"
         android:orientation="horizontal">
         <ImageButton
             android:id="@+id/good"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:backgroundTint="#ffffff"/>
         <ImageButton
             android:id="@+id/commentBtn"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:src="@drawable/comment"
             android:scaleType="centerCrop"
             android:backgroundTint="#ffffff"/>
         <ImageButton
             android:id="@+id/scrap"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:backgroundTint="#ffffff" />
     </LinearLayout>

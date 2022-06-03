@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -145,24 +146,27 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         //밑에 사진 띄우기
         init();
         scrap();
-        TextView text_scrap=findViewById(R.id.myscrap);
-        TextView text_item=findViewById(R.id.myitem);
-        text_scrap.setOnClickListener(new View.OnClickListener() {
+
+        //Tab implant
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.mypage_tabs);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                my_album.setVisibility(View.INVISIBLE);
-                my_scrap.setVisibility(View.VISIBLE);
-                scrapAdapter.notifyDataSetChanged();
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                changeView(pos);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // do nothing
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // do nothing
             }
         });
-        text_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                my_album.setVisibility(View.VISIBLE);
-                my_scrap.setVisibility(View.INVISIBLE);
-                mAlbumAdapter.notifyDataSetChanged();
-            }
-        });
+
 
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -200,7 +204,21 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
             }
         });
     }
-    //프로필 이미지 설정 methods/////////////////////////////////////////////////////////////////
+    private void changeView(int index) {
+        switch (index) {
+            case 0:
+                my_album.setVisibility(View.VISIBLE);
+                my_scrap.setVisibility(View.INVISIBLE);
+                mAlbumAdapter.notifyDataSetChanged();
+                break;
+            case 1:
+                my_album.setVisibility(View.INVISIBLE);
+                my_scrap.setVisibility(View.VISIBLE);
+                scrapAdapter.notifyDataSetChanged();
+                break;
+        }
+    }
+///////////////프로필 이미지 설정 methods/////////////////////////////////////////////////////////////////
 
     //앨범에서 이미지 가져오기
     private void doTakeAlbumAction()
