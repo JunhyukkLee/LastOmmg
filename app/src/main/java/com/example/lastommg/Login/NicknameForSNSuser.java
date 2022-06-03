@@ -38,7 +38,7 @@ public class NicknameForSNSuser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_sns);
         storageReference = FirebaseStorage.getInstance().getReference();
-
+        mAuth = FirebaseAuth.getInstance();
         db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -64,11 +64,11 @@ public class NicknameForSNSuser extends AppCompatActivity {
                 String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
                 String name = ((EditText) findViewById(R.id.name)).getText().toString();
                 String email = ((EditText) findViewById(R.id.ID)).getText().toString();
-                StorageReference submitProfile = storageReference.child("image/" + "b.PNG");
+                StorageReference submitProfile = storageReference.child("image/" + "user.PNG");
                 submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        User user= new User(email,"한줄소개를입력하세요",name,nickname,uri.toString());
+                        User user= new User(email,"한줄소개를입력하세요",name,nickname,uri.toString(),mAuth.getUid());
                         db.collection("User").document(nickname).set(user);
                         userList.add(user);
                     }

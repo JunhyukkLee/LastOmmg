@@ -92,7 +92,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         TextView emailSlot = findViewById(R.id.email);
         TextView introduction = findViewById(R.id.intro);
         nameSlot.setText(local.getNickname());
-        emailSlot.setText(local.getEmail());
+        emailSlot.setText(local.getName());
         introduction.setText(local.getIntro());
         EditText editIntro=findViewById(R.id.edit_intro);
         ImageButton btn_intro=findViewById(R.id.btn_intro);

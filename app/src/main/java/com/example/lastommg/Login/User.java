@@ -14,7 +14,7 @@ public class User {
 
 
 
-    public User(String id, String intro,String username, String nickname,String pro_img) {
+    public User(String id, String intro,String username, String nickname,String pro_img,String uid) {
         this.id = id;
         this.username = username;
         this.nickname = nickname;

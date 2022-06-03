@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -43,6 +44,7 @@ public class FacebookUserInfo extends AppCompatActivity {
     Button sign;
     String nickname;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth;
     ArrayList<User> userList2=new ArrayList<>();
 
 
@@ -50,6 +52,7 @@ public class FacebookUserInfo extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage2);
+        mAuth=FirebaseAuth.getInstance();
         email2 = findViewById(R.id.email1);
         context2 = this;
         profile2 = findViewById(R.id.round_profile_image1);
@@ -126,7 +129,7 @@ public class FacebookUserInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
-                StorageReference submitProfile = storageReference.child("profile/" + "b.PNG");
+                StorageReference submitProfile = storageReference.child("profile/" + "user.PNG");
                 submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -134,7 +137,7 @@ public class FacebookUserInfo extends AppCompatActivity {
                         Log.d("이메일1", profile_email);
                         Log.d("닉네임1", nickname);
                         Log.d("이름1", profile_name);
-                        User user= new User(profile_email,"한줄소개를입력하세요",profile_name,nickname,uri.toString());
+                        User user= new User(profile_email,"한줄소개를입력하세요",profile_name,nickname,uri.toString(),mAuth.getUid());
 
 
                         db.collection("User").document(nickname).set(user);
