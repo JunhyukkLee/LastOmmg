@@ -140,7 +140,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void setInit() {
-
         btn_back = (ImageView) findViewById(R.id.btn_back);
         btn_back.setOnClickListener(this);
         img_thumb = (ImageView) findViewById(R.id.img_thumb);
@@ -158,7 +157,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         txt_date.setText(mitem.getAddress());
         //전화번호
         txt_type = (TextView) findViewById(R.id.txt_PhoneNum);
-        txt_type.setText(mitem.getPhoneNumber());
+        if (mitem.getPhoneNumber() == "") {
+            txt_type.setText(mitem.getPhoneNumber());
+        }
+        else {
+            txt_type.setText("tel: " + mitem.getPhoneNumber());
+        }
         //코멘트
         txt_introduce = (TextView) findViewById(R.id.txt_introduce);
         txt_introduce.setText("comments");
