@@ -27,7 +27,7 @@
                 android:id="@+id/b_image"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/b"
+                android:src="@drawable/splash"
                 android:scaleType="fitXY"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

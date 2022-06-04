@@ -1,5 +1,6 @@
 package com.example.lastommg.Login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
@@ -28,6 +29,8 @@ open class LoginActivity1 : AppCompatActivity() {
     private val TAG: String = "로그"
     private lateinit var callback : SessionCallback
     private lateinit var fbAuth : FirebaseAuth
+    var kakao_name: String? = null
+    var kakao_uid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -105,11 +108,23 @@ open class LoginActivity1 : AppCompatActivity() {
 
     fun startMainActivity() {
         Log.d(TAG, "LoginActivity - startMainActivity() called")
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, KakaoUserInfo::class.java)
         startActivity (intent)
         finish ()
     }
+    @SuppressLint("ResourceType")
+    fun setProfile(){
+        val user = Firebase.auth.currentUser
 
+        user?.let {
+
+            kakao_name = user.displayName
+            kakao_uid = user.uid
+            Log.d("카톡유아이디", kakao_uid!!)
+
+        }
+
+    }
     override fun onDestroy() {
         super.onDestroy()
         Session . getCurrentSession ().removeCallback(callback)
