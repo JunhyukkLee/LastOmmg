@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"/>
             <Button
                 android:id="@+id/sb"
-                android:layout_width="match_parent"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="인증"
@@ -85,11 +85,12 @@
 
             <Button
                 android:id="@+id/checking"
-                android:layout_width="match_parent"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="완료"
-                android:textSize="10dp" />
+                android:textSize="10dp"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

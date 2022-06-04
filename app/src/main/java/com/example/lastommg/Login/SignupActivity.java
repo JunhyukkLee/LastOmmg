@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,15 +33,26 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "dkssudgktpdy";
     private FirebaseAuth mAuth;
     private View sign_up;
+    EditText phone;
+    EditText nickName;
+    EditText name;
+    Button nickcheck;
+    Button checking;
+    Button sb;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<User> userList=new ArrayList<>();
     StorageReference storageReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
         storageReference = FirebaseStorage.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        phone =findViewById(R.id.phoneNumber);
+        nickName =findViewById(R.id.nickName);
+        name =findViewById(R.id.name);
+        nickcheck = findViewById(R.id.nickdc);
         db.collection("User").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -58,9 +70,12 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
         mAuth = FirebaseAuth.getInstance();
-        findViewById(R.id.sb).setOnClickListener(onClickListener);
+
         sign_up = findViewById(R.id.clear);
-        findViewById(R.id.checking).setOnClickListener(onClickListener2);
+        checking=findViewById(R.id.checking);
+        checking.setOnClickListener(onClickListener2);
+        sb=findViewById(R.id.sb);
+        sb.setOnClickListener(onClickListener);
         findViewById(R.id.nickdc).setOnClickListener(onClickListener3);
 
         sign_up.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +122,8 @@ public class SignupActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.sb:
                     signup();
+                    sb.setVisibility(View.GONE);
+                    checking.setVisibility(View.VISIBLE);
                     break;
             }
         }
@@ -194,7 +211,7 @@ public class SignupActivity extends AppCompatActivity {
                 startToast("비밀번호가 일치하지않습니다");
             }
         } else {
-            startToast("이메일 또는 비밀번호를 입력해주세요");
+            startToast("아이디와 비밀번호를 모두 입력하세요");
 
         }
 
@@ -237,6 +254,10 @@ public class SignupActivity extends AppCompatActivity {
                     Log . d (TAG, "LoginActivity - onStart() called");
                     Toast.makeText(SignupActivity.this, "이메일인증완료", Toast.LENGTH_SHORT).show();
                     startToast("이메일인증완료");
+                    phone.setVisibility(View.VISIBLE);
+                    nickName.setVisibility(View.VISIBLE);
+                    name.setVisibility(View.VISIBLE);
+                    nickcheck.setVisibility(View.VISIBLE);
 
                 } else {
                     Toast.makeText(SignupActivity.this, "이메일인증실패", Toast.LENGTH_SHORT).show();
