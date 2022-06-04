@@ -49,8 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15dp"
-
-            android:src="@drawable/plus"
+            android:src="@drawable/post"
             app:backgroundTint="#D0E9EC"
             tools:ignore="MissingConstraints" />
 
