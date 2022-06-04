@@ -102,19 +102,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         mPressProfileImg.setOnClickListener(this);
 
         background_profile = findViewById(R.id.profile_image);
-//        Glide.with(MypageActivity.this).load(a).into(background_profile);
-
-        Bitmap back_profile_bitmap = null;
-        try {
-            back_profile_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), a);
-            back_profile_bitmap = ImgBlur.blur(this, back_profile_bitmap);
-            background_profile.setImageBitmap(back_profile_bitmap);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d("어우", "못얻어옴");
-            background_profile.setImageBitmap(back_profile_bitmap);
-        }
+        Glide.with(MypageActivity.this).load(a).into(background_profile);
 
 
 
