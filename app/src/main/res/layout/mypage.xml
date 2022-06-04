@@ -9,9 +9,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
 
         <com.example.lastommg.MyPage.RoundImageView
@@ -24,10 +24,27 @@
             android:layout_width="match_parent"
             android:layout_height="150dp">
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_height="50dp"
-                android:textAlignment="center" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/btn_logout"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="5dp"
+                    android:padding="0sp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logout" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textAlignment="center" />
+            </FrameLayout>
+
 
             <TextView
                 android:id="@+id/email"
@@ -42,10 +59,11 @@
                     android:id="@+id/btn_intro"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_gravity="right"
+                    android:layout_gravity="center|right"
+                    android:layout_marginRight="5dp"
                     android:padding="0sp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/yes" />
+                    android:src="@drawable/setting" />
 
                 <TextView
                     android:id="@+id/intro"
@@ -65,6 +83,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="150dp"
