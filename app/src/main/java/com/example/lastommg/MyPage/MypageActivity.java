@@ -12,7 +12,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -20,6 +23,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +59,7 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 // 앨범 클릭 추가할때 ,setOnclick implements해야함
@@ -72,6 +77,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
     private static final int CROP_FROM_CAMERA = 2;
     private Uri mImageCaptureUri;
     RoundImageView mPressProfileImg;
+    ImageView background_profile;
 
     AccessToken accessToken = AccessToken.getCurrentAccessToken();
     boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
@@ -83,6 +89,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         App local = (App) getApplicationContext();
         final DocumentReference sfDocRef = db.collection("User").document(local.getNickname());
         Log.d("유알아이", local.getPro_img());
+
         storageReference = FirebaseStorage.getInstance().getReference();
         mAlbumAdapter = new AlbumAdapter();
         scrapAdapter=new ScrapAdapter();
@@ -93,6 +100,24 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         mPressProfileImg = findViewById(R.id.round_profile_image);
         Glide.with(MypageActivity.this).load(a).into(mPressProfileImg);
         mPressProfileImg.setOnClickListener(this);
+
+        background_profile = findViewById(R.id.profile_image);
+//        Glide.with(MypageActivity.this).load(a).into(background_profile);
+
+        Bitmap back_profile_bitmap = null;
+        try {
+            back_profile_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), a);
+            back_profile_bitmap = ImgBlur.blur(this, back_profile_bitmap);
+            background_profile.setImageBitmap(back_profile_bitmap);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.d("어우", "못얻어옴");
+            background_profile.setImageBitmap(back_profile_bitmap);
+        }
+
+
+
 
 //        RoundImageView riv = findViewById(R.id.round_profile_image);
 //        Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.profile_img);
@@ -111,10 +136,8 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
             }
         });
 
-        TextView emailSlot = findViewById(R.id.email);
         TextView introduction = findViewById(R.id.intro);
         nameSlot.setText(local.getNickname());
-        emailSlot.setText(local.getName());
         introduction.setText(local.getIntro());
         EditText editIntro=findViewById(R.id.edit_intro);
         ImageButton btn_intro=findViewById(R.id.btn_intro);
@@ -124,14 +147,14 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
             public void onClick(View view) {
                 if(btn_intro.getTag().equals("edit")){
                     btn_intro.setTag("ok");
-                    btn_intro.setImageResource(R.drawable.no);
+//                    btn_intro.setImageResource(R.drawable.setting);
                     editIntro.setText(local.getIntro());
                     editIntro.setVisibility(View.VISIBLE);
                     introduction.setVisibility(View.INVISIBLE);
                 }
                 else{
                     btn_intro.setTag("edit");
-                    btn_intro.setImageResource(R.drawable.yes);
+//                    btn_intro.setImageResource(R.drawable.yes);
                     local.setIntro(editIntro.getText().toString());
                     introduction.setText(local.getIntro());
                     db.runTransaction(new Transaction.Function<Void>() {

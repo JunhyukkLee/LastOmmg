@@ -22,7 +22,8 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
+        renderscriptTargetApi 18
+        renderscriptSupportModeEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -84,6 +85,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'com.google.android.libraries.places:places:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.8'
+
 }
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
