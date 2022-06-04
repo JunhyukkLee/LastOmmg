@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <ImageView
         android:id="@+id/login"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:gravity="center"
-        android:text="로그인"
-        android:textSize="24sp" />
+        android:background="@drawable/ommg2"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,57 +19,119 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <EditText
-            android:id="@+id/ID2"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="e-mail"
-            android:inputType="textEmailAddress" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ID2"
+                android:background="#00000000"
+                android:ems="10"
+                android:layout_weight="2"
+                android:hint="e-mail" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/pw2"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="password"
-            android:inputType="textPassword" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/pw2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="password"
+                android:layout_weight="2"
+                android:background="#00000000"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/loginB"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="43dp"
             android:text="로그인"
-            android:visibility="visible" />
+            android:visibility="visible"
+            />
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/loginF"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
+            android:layout_height="50dp"
             android:visibility="visible" />
 
 
-        <ImageButton
-            android:id="@+id/btnKako"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_width="372dp"
-            android:layout_height="34dp"
-            android:padding="0sp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/kakao_login_button" />
+            android:background="@drawable/btn_option"
+            android:weightSum="15">
 
-        <Button
-            android:id="@+id/sb"
+            <ImageView
+                android:layout_width="13dp"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/talk">
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textColor="#ffffff"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Continue with KakaoTalk"
+                android:stateListAnimator="@null"
+                android:textAllCaps="false"
+                android:id="@+id/btnKako"
+                android:layout_weight="14"
+                android:textSize="17dp"/>
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="71dp"
+            android:gravity="center"
+            />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입" />
-        <Button
-            android:id="@+id/findPW"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="비밀번호 찾기" />
-
-
-
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/sb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="회원가입"
+                android:textColor="@drawable/text_option"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="or"
+                android:textSize="14dp">
+            </TextView>
+            <TextView
+                android:id="@+id/findPW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@drawable/text_option"
+                android:text="비밀번호 찾기"
+                android:clickable="true"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

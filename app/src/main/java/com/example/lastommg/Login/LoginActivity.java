@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
+import org.w3c.dom.Text;
 //
 
 public class LoginActivity extends AppCompatActivity {
@@ -43,7 +45,9 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public String facebook_name;
     public String facebook_email;
-
+    public String facebook_uid;
+    TextView FindPW;
+    TextView sb;
     public static Context context5;
 
     private CallbackManager mCallbackManager;
@@ -58,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         //login_K = findViewById(R.id.loginK); //카카오로그인
         //logout_K = findViewById(R.id.logoutK);
         Button loginE = findViewById(R.id.loginB);
-        ImageButton loginK = findViewById(R.id.btnKako);
+        TextView loginK = findViewById(R.id.btnKako);
         loginK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Button FindPW = (Button) findViewById(R.id.findPW);
+        FindPW = findViewById(R.id.findPW);
         FindPW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,8 +101,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d("이름",object.getString("name"));
                                 facebook_name=object.getString("name");
                                 facebook_email=object.getString("email");
+                                facebook_uid = object.getString(("uid"));
                                 Log.d("아이디",object.getString("id"));
                                 Log.d("email",object.getString("email"));
+                                Log.d("유아이디",object.getString("uid"));
+
                                 startActivity(intent);
 
 
@@ -219,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                startToast("로그인 성공");
+                                startToast("로그인 성공!");
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 updateUI(user);
@@ -233,7 +240,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            startToast("이메일 또는 비밀번호를 입력해주세요");
+            startToast("아이디 또는 비밀번호를 입력해주세요");
         }
 
 

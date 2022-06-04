@@ -64,6 +64,8 @@
 
         <activity android:name=".Login.LoginActivity1" />
 
+        <activity android:name=".Login.KakaoUserInfo"/>
+
         <activity android:name=".Login.NicknameForSNSuser" />
 
         <activity android:name=".Login.FacebookUserInfo"></activity>
@@ -124,6 +126,10 @@
         <activity android:name=".Login.LoginActivity" />
 
         <activity android:name=".MainActivity"/>
+        <activity android:name=".Login.FindPW"></activity>
+
+
+
 
         <activity
             android:name=".SecondTab.Upload.MapsActivity"
