@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,6 +77,8 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
 
     public void popupXml(String nickname, String name, String decription,String uri, String phoneNumber, String address, int position) {
         //Log.d(TAG, "okay");
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
         App local = (App) mContext.getApplicationContext();
         Map<String, Object> good_id = new HashMap<>();
         Map<String, Object> scrap_id = new HashMap<>();
@@ -88,7 +91,12 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
         commentAdapter = new CommentAdapter();
         recyclerView.setAdapter(commentAdapter);
         EditText add_comment=view.findViewById(R.id.add_comment);
+
         TextView post=view.findViewById(R.id.post);
+        final DocumentReference sfDocRef = db.collection("items").document(name);
+        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(local.getNickname());
+        DocumentReference docRef_scrap = db.collection("items").document(name).collection("Scrap").document(local.getNickname());
+        DocumentReference docRef_user = db.collection("User").document(local.getNickname()).collection("Scrap").document(name);
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +104,29 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
                 Log.d("id확인",local.getNickname());
                 commentAdapter.addComment(comment);
                 db.collection("items").document(name).collection("Comment").document(add_comment.getText().toString()).set(comment);
+                db.runTransaction(new Transaction.Function<Void>() {
+                    @Override
+                    public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                        DocumentSnapshot snapshot = transaction.get(sfDocRef);
+                        // Note: this could be done without a transaction
+                        //       by updating the population using FieldValue.increment()
+                        double newcomment = snapshot.getDouble("comment") + 1;
+                        transaction.update(sfDocRef, "comment", newcomment);
+                        // Success
+                        return null;
+                    }
+                }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Transaction success!");
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Transaction failure.", e);
+                            }
+                        });
                 add_comment.setText(null);
                 commentAdapter.notifyDataSetChanged();
             }
@@ -123,10 +154,7 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
         ImageView imageView = view.findViewById(R.id.imageView);
         ImageButton good = view.findViewById(R.id.good);
         ImageButton scrap = view.findViewById(R.id.scrap);
-        final DocumentReference sfDocRef = db.collection("items").document(name);
-        DocumentReference docRef = db.collection("items").document(name).collection("Good").document(local.getNickname());
-        DocumentReference docRef_scrap = db.collection("items").document(name).collection("Scrap").document(local.getNickname());
-        DocumentReference docRef_user = db.collection("User").document(local.getNickname()).collection("Scrap").document(name);
+        ImageButton call = view.findViewById(R.id.call);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -244,6 +272,49 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
                 }
             }
         });
+
+        ImageButton commentBtn = view.findViewById(R.id.commentBtn);
+        LinearLayout commentView = view.findViewById(R.id.comment_box);
+        ScrollView infoView = view.findViewById(R.id.info_box);
+        commentView.setVisibility(View.INVISIBLE);
+        infoView.setVisibility(View.VISIBLE);
+        TextView nnickname=view.findViewById(R.id.nickname);
+        TextView nname = view.findViewById(R.id.name);
+        TextView aaddress = view.findViewById(R.id.address);
+        TextView desc = view.findViewById(R.id.description);
+        View line=view.findViewById(R.id.line);
+        Glide.with(mContext).load(u).into(imageView);
+        ImageButton back=view.findViewById(R.id.back);
+        nnickname.setText(nickname);
+        nnickname.setTextSize(20);
+        aaddress.setTextSize(15);
+        nname.setText(name);
+
+        aaddress.setText(address);
+        desc.setText(decription);
+        commentBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                switch (pos){
+                    case 0:
+                        commentView.setVisibility(View.VISIBLE);
+                        infoView.setVisibility(View.INVISIBLE);
+                        nname.setVisibility(View.INVISIBLE);
+                        aaddress.setVisibility(View.INVISIBLE);
+                        line.setVisibility(View.INVISIBLE);
+                        pos = 1;
+                        break;
+                    case 1:
+                        commentView.setVisibility(View.INVISIBLE);
+                        infoView.setVisibility(View.VISIBLE);
+                        nname.setVisibility(View.VISIBLE);
+                        aaddress.setVisibility(View.VISIBLE);
+                        line.setVisibility(View.VISIBLE);
+                        pos = 0;
+                        break;
+                }
+            }
+        });
         scrap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -333,50 +404,36 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
                 }
             }
         });
-        ImageButton commentBtn = view.findViewById(R.id.commentBtn);
-        LinearLayout commentView = view.findViewById(R.id.comment_box);
-        ScrollView infoView = view.findViewById(R.id.info_box);
-        commentView.setVisibility(View.INVISIBLE);
-        infoView.setVisibility(View.VISIBLE);
 
-        commentBtn.setOnClickListener(new View.OnClickListener(){
+
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                switch (pos){
-                    case 0:
-                        commentView.setVisibility(View.VISIBLE);
-                        infoView.setVisibility(View.INVISIBLE);
-                        pos = 1;
-                        break;
-                    case 1:
-                        commentView.setVisibility(View.INVISIBLE);
-                        infoView.setVisibility(View.VISIBLE);
-                        pos = 0;
-                        break;
+            public void onClick(View v) {
+                if (dialog != null) {
+                    dialog.dismiss();
                 }
             }
         });
-        TextView textView = view.findViewById(R.id.textView);
-        Glide.with(mContext).load(u).into(imageView);
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phon="tel:"+phoneNumber;
+                Intent intent=new Intent(Intent.ACTION_DIAL,Uri.parse(phon));
+                mContext.startActivity(intent);
+            }
+        });
 
-        textView.setTextSize(35);
-        textView.setText(name + "\n");
-        textView.append(decription + "\n");
-        textView.append(address + "\n");
-        textView.append(phoneNumber + "\n");
-
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("음식점정보").setView(view);
-        builder.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+        builder.setView(view);
+        /*builder.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
             }
-        });
+        });*/
+
+
         dialog = builder.create();
         dialog.show();
     }

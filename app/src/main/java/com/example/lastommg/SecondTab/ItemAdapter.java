@@ -86,9 +86,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        ImageView imageView,rec;
         RelativeLayout parentLayout;
         TextView gcount,ccount,scount;
+
         Uri u;
 
         public ViewHolder(@NonNull View itemView) {
@@ -98,6 +99,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             gcount=itemView.findViewById(R.id.goodcount);
             ccount=itemView.findViewById(R.id.commentcount);
             scount=itemView.findViewById(R.id.scrapcount);
+            rec = itemView.findViewById(R.id.rec);
+            rec.bringToFront();
+
         }
 
         public void setItem(Item item) {
@@ -106,7 +110,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             gcount.setText(String.valueOf(item.getGood()));
             ccount.setText(String.valueOf(item.getComment()));
             scount.setText(String.valueOf(item.getScrap()));
-
+            if(item.getGood()<3){
+                rec.setVisibility(View.INVISIBLE);
+            }
+            else
+            {
+                rec.setVisibility(View.VISIBLE);
+            }
         }
     }
 
