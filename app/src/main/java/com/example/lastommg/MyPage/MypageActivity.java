@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ import com.example.lastommg.SecondTab.Comment;
 import com.example.lastommg.SecondTab.Item;
 import com.example.lastommg.Login.App;
 import com.example.lastommg.R;
+import com.example.lastommg.SecondTab.Upload.PostActivity;
 import com.example.lastommg.SecondTab.myItem;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -78,6 +80,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
     private Uri mImageCaptureUri;
     RoundImageView mPressProfileImg;
     ImageView background_profile;
+    ImageButton back;
 
     AccessToken accessToken = AccessToken.getCurrentAccessToken();
     boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
@@ -104,7 +107,14 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         background_profile = findViewById(R.id.profile_image);
         Glide.with(MypageActivity.this).load(a).into(background_profile);
 
-
+        back = findViewById(R.id.backToMain);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MypageActivity.this, MainActivity.class));
+                finish();
+            }
+        });
 
 
 //        RoundImageView riv = findViewById(R.id.round_profile_image);
