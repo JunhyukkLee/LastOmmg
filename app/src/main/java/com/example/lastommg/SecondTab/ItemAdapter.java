@@ -584,6 +584,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         items.sort(Comparator.comparing(Item::getTimestamp));
         Collections.reverse(items);
     }
+    public void sortGood(){
+        items.sort(Comparator.comparing(Item::getGood));
+        Collections.reverse(items);
+    }
 
     class itemDistanceComparator implements Comparator<Item> {
         @Override

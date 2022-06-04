@@ -207,6 +207,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int i = itemAdapter.getItemCount();
                 Log.d("개수", Integer.toString(i));
                 break;
+            case R.id.sortgood:
+                itemAdapter.sortGood();
+                itemAdapter.notifyDataSetChanged();
+                recyclerView.startLayoutAnimation();
+                break;
 
         }
         return super.onOptionsItemSelected(item);
