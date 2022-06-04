@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +42,8 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,6 +139,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public void popupXml(String nickname, String name, String decription,String uri, String phoneNumber, String address, int position) {
         //Log.d(TAG, "okay");
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
         App local = (App) context.getApplicationContext();
         Map<String, Object> good_id = new HashMap<>();
         Map<String, Object> scrap_id = new HashMap<>();
@@ -146,6 +153,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         commentAdapter = new CommentAdapter();
         recyclerView.setAdapter(commentAdapter);
         EditText add_comment=view.findViewById(R.id.add_comment);
+
         TextView post=view.findViewById(R.id.post);
         final DocumentReference sfDocRef = db.collection("items").document(name);
         DocumentReference docRef = db.collection("items").document(name).collection("Good").document(local.getNickname());
@@ -208,7 +216,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         ImageView imageView = view.findViewById(R.id.imageView);
         ImageButton good = view.findViewById(R.id.good);
         ImageButton scrap = view.findViewById(R.id.scrap);
-
+        ImageButton call = view.findViewById(R.id.call);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -332,6 +340,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         ScrollView infoView = view.findViewById(R.id.info_box);
         commentView.setVisibility(View.INVISIBLE);
         infoView.setVisibility(View.VISIBLE);
+        TextView nnickname=view.findViewById(R.id.nickname);
+        TextView nname = view.findViewById(R.id.name);
+        TextView aaddress = view.findViewById(R.id.address);
+        TextView desc = view.findViewById(R.id.description);
+        View line=view.findViewById(R.id.line);
+        Glide.with(context).load(u).into(imageView);
+        ImageButton back=view.findViewById(R.id.back);
+        nnickname.setText(nickname);
+        nnickname.setTextSize(20);
+        aaddress.setTextSize(15);
+        nname.setText(name);
+
+        aaddress.setText(address);
+        desc.setText(decription);
         commentBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -339,11 +361,17 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     case 0:
                         commentView.setVisibility(View.VISIBLE);
                         infoView.setVisibility(View.INVISIBLE);
+                        nname.setVisibility(View.INVISIBLE);
+                        aaddress.setVisibility(View.INVISIBLE);
+                        line.setVisibility(View.INVISIBLE);
                         pos = 1;
                         break;
                     case 1:
                         commentView.setVisibility(View.INVISIBLE);
                         infoView.setVisibility(View.VISIBLE);
+                        nname.setVisibility(View.VISIBLE);
+                        aaddress.setVisibility(View.VISIBLE);
+                        line.setVisibility(View.VISIBLE);
                         pos = 0;
                         break;
                 }
@@ -439,27 +467,35 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             }
         });
 
-        TextView textView = view.findViewById(R.id.textView);
-        Glide.with(context).load(u).into(imageView);
 
-        textView.setTextSize(35);
-        textView.setText(name + "\n");
-        textView.append(decription + "\n");
-        textView.append(address + "\n");
-        textView.append(phoneNumber + "\n");
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phon="tel:"+phoneNumber;
+                Intent intent=new Intent(Intent.ACTION_DIAL,Uri.parse(phon));
+               context.startActivity(intent);
+            }
+        });
 
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);
-        builder.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+        /*builder.setNegativeButton("닫기", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (dialog != null) {
                     dialog.dismiss();
                 }
             }
-        });
+        });*/
+
+
         dialog = builder.create();
         dialog.show();
     }
