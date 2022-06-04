@@ -99,11 +99,11 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 Intent intent = new Intent(LoginActivity.this, FacebookUserInfo.class);
                                 Log.d("이름",object.getString("name"));
-                                Log.d("아이디",object.getString("id"));
                                 Log.d("email",object.getString("email"));
                                 facebook_name=object.getString("name");
                                 facebook_email=object.getString("email");
-                                facebook_uid = object.getString(("id"));
+
+
 
 
                                 startActivity(intent);

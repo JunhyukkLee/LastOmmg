@@ -63,11 +63,7 @@ public class FacebookUserInfo extends AppCompatActivity {
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
         profile_name = ((LoginActivity) LoginActivity.context5).facebook_name;
         profile_email = ((LoginActivity) LoginActivity.context5).facebook_email;
-        profile_uid = ((LoginActivity) LoginActivity.context5).facebook_uid;
         Log.d("페에에에북","이동");
-        Log.d("페북이름이여",profile_name);
-        Log.d("페북uid이여",profile_uid);
-
 
 
         //유저리스트 불러오는 코드
@@ -114,7 +110,7 @@ public class FacebookUserInfo extends AppCompatActivity {
         }
         for(i=0;i<j;i++)
         {
-            if(userList2.get(i).getUid().equals(profile_uid))
+            if(userList2.get(i).getUid().equals(mAuth.getUid()))
             {//해당 닉네임이 이미 존재 -> 페북 닉네임이 존재  메인으로 이동
                 Log.d("페북 닉 존재","메인으로 이동");
                 Intent intent4 = new Intent(FacebookUserInfo.this, MainActivity.class);
@@ -141,7 +137,7 @@ public class FacebookUserInfo extends AppCompatActivity {
                         Log.d("이메일1", profile_email);
                         Log.d("닉네임1", nickname);
                         Log.d("이름1", profile_name);
-                        User user= new User(profile_email,"한줄소개를입력하세요",profile_name,nickname,uri.toString(), profile_uid);
+                        User user= new User(profile_email,"한줄소개를입력하세요",profile_name,nickname,uri.toString(), mAuth.getUid());
 
 
                         db.collection("User").document(nickname).set(user);
