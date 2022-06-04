@@ -122,6 +122,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
 //        riv.setImageBitmap(bm);
         //프로필 정보 띄우기
         TextView nameSlot = findViewById(R.id.name);
+        nameSlot.bringToFront();
         ImageButton logout = findViewById(R.id.btn_logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
