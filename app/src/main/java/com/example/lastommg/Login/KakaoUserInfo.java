@@ -50,9 +50,7 @@ public class KakaoUserInfo extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage3);
-        email2 = findViewById(R.id.email1);
         context3 = this;
-        profile2 = findViewById(R.id.round_profile_image1);
         storageReference = FirebaseStorage.getInstance().getReference();
         sign = findViewById(R.id.sign);
         sign2= findViewById(R.id.sign2);

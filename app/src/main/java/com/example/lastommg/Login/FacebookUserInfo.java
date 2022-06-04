@@ -44,6 +44,7 @@ public class FacebookUserInfo extends AppCompatActivity {
     ImageView profile2 = null;
     StorageReference storageReference;
     Button sign;
+    Button sign2;
     String nickname;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth;
@@ -55,11 +56,10 @@ public class FacebookUserInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mypage2);
         mAuth=FirebaseAuth.getInstance();
-        email2 = findViewById(R.id.email1);
         context2 = this;
-        profile2 = findViewById(R.id.round_profile_image1);
         storageReference = FirebaseStorage.getInstance().getReference();
         sign = findViewById(R.id.sign);
+        sign2 = findViewById(R.id.sign2);
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
         profile_name = ((LoginActivity) LoginActivity.context5).facebook_name;
         profile_email = ((LoginActivity) LoginActivity.context5).facebook_email;
@@ -67,8 +67,7 @@ public class FacebookUserInfo extends AppCompatActivity {
         Log.d("페에에에북","이동");
         Log.d("페북이름이여",profile_name);
         Log.d("페북uid이여",profile_uid);
-        email2.setText(profile_email);
-        checkNick();
+
 
 
         //유저리스트 불러오는 코드
@@ -110,23 +109,21 @@ public class FacebookUserInfo extends AppCompatActivity {
 
         if(j==0)
         {//유저가 없을때 , 없으므로 닉네임 생성
-            Toast.makeText(FacebookUserInfo.this, "사용가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
-            userAdd();
+            kkk();
 
         }
         for(i=0;i<j;i++)
         {
-            if(userList2.get(i).getId().equals(profile_email))
+            if(userList2.get(i).getUid().equals(profile_uid))
             {//해당 닉네임이 이미 존재 -> 페북 닉네임이 존재  메인으로 이동
                 Log.d("페북 닉 존재","메인으로 이동");
-
+                Intent intent4 = new Intent(FacebookUserInfo.this, MainActivity.class);
+                startActivity(intent4);
                 break;
             }
             if(i==(j-1)){//없으므로 닉네임 생성
                 Log.d("페북 닉 없음","이동");
-
-                Toast.makeText(FacebookUserInfo.this, "사용가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
-                userAdd();
+                kkk();
             }
         }
     }
@@ -158,6 +155,43 @@ public class FacebookUserInfo extends AppCompatActivity {
                         Log.d("실패", "ㅠㅠ");
                     }
                 });
+
+            }
+        });
+    }
+    private void checkNick2(){
+        int j=getUserCount();
+        int i;
+        String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
+        if(j==0)
+        {
+            Toast.makeText(FacebookUserInfo.this, "사용가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
+            sign2.setVisibility(View.GONE);
+            sign.setVisibility(View.VISIBLE);
+            userAdd();
+
+        }
+        for(i=0;i<j;i++)
+        {
+            Log.d("왜안되지", userList2.get(i).getNickname()+"+++++"+nickname);
+            if(userList2.get(i).getNickname().equals(nickname))
+            {
+                Toast.makeText(FacebookUserInfo.this, "닉네임 중복!", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            if(i==(j-1)){
+                Toast.makeText(FacebookUserInfo.this, "사용가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                sign2.setVisibility(View.GONE);
+                sign.setVisibility(View.VISIBLE);
+                userAdd();
+            }
+        }
+    }
+    private void kkk(){
+        sign2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkNick2();
 
             }
         });
