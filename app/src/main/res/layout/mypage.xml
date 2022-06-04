@@ -66,7 +66,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginRight="40dp"
-
                 android:visibility="visible"
                 android:textSize="17dp"/>
             <EditText
@@ -74,7 +73,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginRight="40dp"
-
                 android:visibility="invisible"
                 android:textSize="17dp"/>
 

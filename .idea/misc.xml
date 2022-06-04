@@ -3,8 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/drawable/boarder.xml" value="0.1955" />
-        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/activity_detail.xml" value="0.1875" />
         <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/activity_maps.xml" value="0.36614583333333334" />
         <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/activity_post.xml" value="0.36614583333333334" />
@@ -62,7 +60,7 @@
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/comment.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/find_pw.xml" value="0.19814814814814816" />
-        <entry key="app/src/main/res/layout/login.xml" value="0.19814814814814816" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.375" />
         <entry key="app/src/main/res/layout/mypage.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/mypage2.xml" value="0.1685185185185185" />
         <entry key="app/src/main/res/layout/popup1.xml" value="0.2520833333333333" />
