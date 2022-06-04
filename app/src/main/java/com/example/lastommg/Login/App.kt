@@ -1,6 +1,10 @@
 package com.example.lastommg.Login
 
+import android.app.Activity
 import android.app.Application
+import android.os.Build
+import android.view.WindowManager
+import androidx.core.view.WindowCompat
 import com.kakao.auth.KakaoSDK
 class App : Application() {
 
@@ -27,6 +31,7 @@ class App : Application() {
     { super.onTerminate()
         instance = null
     }
+
     fun getAppContext() : App {
         checkNotNull(instance){
             "This Application does not inherit com.example.App"
