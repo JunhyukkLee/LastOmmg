@@ -24,7 +24,6 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,8 +33,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import org.json.JSONException;
 import org.w3c.dom.Text;
@@ -49,8 +46,6 @@ public class LoginActivity extends AppCompatActivity {
     public String facebook_name;
     public String facebook_email;
     public String facebook_uid;
-    AccessToken accessToken = AccessToken.getCurrentAccessToken();
-    boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
     TextView FindPW;
     TextView sb;
     public static Context context5;
@@ -68,8 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         //logout_K = findViewById(R.id.logoutK);
         Button loginE = findViewById(R.id.loginB);
         TextView loginK = findViewById(R.id.btnKako);
-
-
         loginK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,9 +141,9 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     //현재 유저가 로그인 되어있는걸 확인한 후 그냥 바로 메인으로 연결해줌
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
                 } else {
                     //로그아웃 상태
                 }
@@ -261,24 +254,6 @@ public class LoginActivity extends AppCompatActivity {
     //파베관련
     private void updateUI(FirebaseUser user) {
     }
-
-    @Override
-    protected void onDestroy() {
-//        signOut();
-        super.onDestroy();
-    }
-//    private void signOut() {
-//        mAuth.signOut();
-//        if (isLoggedIn == true) {
-//            LoginManager.getInstance().logOut();
-//        }
-//        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
-//            @Override
-//            public void onCompleteLogout() {
-//                FirebaseAuth.getInstance().signOut();
-//            }
-//        });
-//    }
 
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();

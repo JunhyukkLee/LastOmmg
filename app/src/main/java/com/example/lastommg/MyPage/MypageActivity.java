@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,12 +23,13 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-//
+
 import com.bumptech.glide.Glide;
 import com.example.lastommg.Login.LoginActivity;
 import com.example.lastommg.MainActivity;
@@ -35,7 +37,6 @@ import com.example.lastommg.SecondTab.Comment;
 import com.example.lastommg.SecondTab.Item;
 import com.example.lastommg.Login.App;
 import com.example.lastommg.R;
-import com.example.lastommg.SecondTab.Upload.PostActivity;
 import com.example.lastommg.SecondTab.myItem;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
@@ -68,7 +69,7 @@ import java.io.Serializable;
 public class MypageActivity extends AppCompatActivity implements AlbumAdapter.OnItemClickListener, Serializable, View.OnClickListener {
     UploadTask uploadTask;
     private Context mContext;
-    private RecyclerView my_album, my_scrap;
+    private RecyclerView my_album,my_scrap;
     private AlbumAdapter mAlbumAdapter;
     ScrapAdapter scrapAdapter;
     StorageReference storageReference;
@@ -95,7 +96,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
 
         storageReference = FirebaseStorage.getInstance().getReference();
         mAlbumAdapter = new AlbumAdapter();
-        scrapAdapter = new ScrapAdapter();
+        scrapAdapter=new ScrapAdapter();
         mAuth = FirebaseAuth.getInstance();
         //프로필 이미지 띄우기(동그랗게)
         Uri a;
@@ -137,19 +138,22 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         TextView introduction = findViewById(R.id.intro);
         nameSlot.setText(local.getNickname());
         introduction.setText(local.getIntro());
-        EditText editIntro = findViewById(R.id.edit_intro);
-        ImageButton btn_intro = findViewById(R.id.btn_intro);
+        EditText editIntro=findViewById(R.id.edit_intro);
+        ImageButton btn_intro=findViewById(R.id.btn_intro);
         btn_intro.setTag("edit");
         btn_intro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (btn_intro.getTag().equals("edit")) {
+                if(btn_intro.getTag().equals("edit")){
                     btn_intro.setTag("ok");
 //                    btn_intro.setImageResource(R.drawable.setting);
                     editIntro.setText(local.getIntro());
                     editIntro.setVisibility(View.VISIBLE);
                     introduction.setVisibility(View.INVISIBLE);
-                } else {
+                    nameSlot.setVisibility(View.INVISIBLE);
+
+                }
+                else{
                     btn_intro.setTag("edit");
 //                    btn_intro.setImageResource(R.drawable.yes);
                     local.setIntro(editIntro.getText().toString());
@@ -178,6 +182,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                             });
                     editIntro.setVisibility(View.INVISIBLE);
                     introduction.setVisibility(View.VISIBLE);
+                    nameSlot.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -212,36 +217,39 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Item item = document.toObject(Item.class);
-                        if (item.getNickname().equals(local.getNickname())) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document:task.getResult()){
+                        Item item=document.toObject(Item.class);
+                        if(item.getNickname().equals(local.getNickname())) {
                             mAlbumAdapter.addItem(item);
                         }
-                        Log.d("확인", document.getId() + "=>" + document.getData());
+                        Log.d("확인",document.getId()+"=>"+document.getData());
                     }
-                } else {
-                    Log.d("실패", "응 실패야", task.getException());
+                }
+                else
+                {
+                    Log.d("실패","응 실패야",task.getException());
                 }
             }
         });
         db.collection("User").document(local.getNickname()).collection("Scrap").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Item item = document.toObject(Item.class);
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document:task.getResult()){
+                        Item item=document.toObject(Item.class);
                         scrapAdapter.addScrap(item);
 
-                        Log.d("확인", document.getId() + "=>" + document.getData());
+                        Log.d("확인",document.getId()+"=>"+document.getData());
                     }
-                } else {
-                    Log.d("실패", "응 실패야", task.getException());
+                }
+                else
+                {
+                    Log.d("실패","응 실패야",task.getException());
                 }
             }
         });
     }
-
     private void changeView(int index) {
         switch (index) {
             case 0:
@@ -256,9 +264,8 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                 break;
         }
     }
-
     ///////////////프로필 이미지 설정 methods/////////////////////////////////////////////////////////////////
-    private void signOut() {
+    private void signOut(){
         mAuth.signOut();
         if (isLoggedIn == true) {
             LoginManager.getInstance().logOut();
@@ -270,9 +277,9 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
             }
         });
     }
-
     //앨범에서 이미지 가져오기
-    private void doTakeAlbumAction() {
+    private void doTakeAlbumAction()
+    {
         // 앨범 호출
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
@@ -298,6 +305,8 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                 if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
                     mPressProfileImg.setImageBitmap(photo);
+                    background_profile.setImageBitmap(photo);
+
                 }
 
                 // 임시 파일 삭제
@@ -317,6 +326,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                         mImageCaptureUri = data.getData();
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageCaptureUri);
                         mPressProfileImg.setImageBitmap(bitmap);
+                        background_profile.setImageBitmap(bitmap);
                         StorageReference filereference = storageReference.child("profile/" + local.getNickname());
                         uploadTask = filereference.putFile(mImageCaptureUri);
                         ProgressDialog progressDialog = new ProgressDialog(this);
@@ -376,6 +386,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                                 progressDialog.dismiss();
                             }
                         });
+
 
 
                     } catch (Exception e) {
@@ -446,7 +457,6 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         mAlbumAdapter.setOnItemClickListener(this);
         my_album.setAdapter(mAlbumAdapter);
     }
-
     // 각 이미지들 눌렀을때 인터랙션
     @Override
     public void onItemClick(View view, myItem item) {

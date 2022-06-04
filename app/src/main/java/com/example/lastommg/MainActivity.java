@@ -224,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 recyclerView.setVisibility(View.INVISIBLE);
                 yoon.setVisibility((View.INVISIBLE));
                 swipeRefreshLayout.setVisibility((View.INVISIBLE));
+                toolbar.setVisibility((View.INVISIBLE));
                 break;
             case 1:
                 recyclerView.setVisibility(View.VISIBLE);
@@ -232,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mPager.setVisibility(View.INVISIBLE);
                 itemAdapter.notifyDataSetChanged();
                 recyclerView.startLayoutAnimation();
+                toolbar.setVisibility((View.VISIBLE));
                 break;
         }
     }

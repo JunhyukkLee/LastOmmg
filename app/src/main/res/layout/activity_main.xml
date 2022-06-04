@@ -6,32 +6,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_height="40dp"
-        android:layout_width="match_parent"
-        android:backgroundTint="#00FF0000"
-        android:background="#00FF0000"
-        app:menu="@menu/toolbar_menu"
-        />
 
     <!--FrameLayout을 사용하는 이유는 뷰페이저안에 요소들과 겹쳐 있는 움직이지 않는 고정 CircleIndicator와 버튼등을 구성하기 위함-->
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="640dp">
+        android:layout_height="670dp">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_height="40dp"
+            android:layout_width="match_parent"
+            android:backgroundTint="#00FF0000"
+            android:background="#00FF0000"
+            app:menu="@menu/toolbar_menu"
+            android:translationZ="1dp"
+            android:visibility="invisible"/>
         <!--희찬-->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:clipToPadding="false"></androidx.viewpager2.widget.ViewPager2>
+            android:clipToPadding="false"/>
+
         <!--준혁-->
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipe"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="640dp"
+            android:layout_marginTop="40dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -73,13 +76,13 @@
             android:id="@+id/firstTab"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="OMMG" />
+            android:text="Article" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/secondTab"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="HI" />
+            android:text="OmmG" />
 
     </com.google.android.material.tabs.TabLayout>
 

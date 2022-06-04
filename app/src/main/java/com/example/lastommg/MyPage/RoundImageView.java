@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -12,7 +14,6 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 
 public class RoundImageView extends AppCompatImageButton {
-
     public static float radius = 360.0f;
 
     public RoundImageView(Context context) {
@@ -32,7 +33,10 @@ public class RoundImageView extends AppCompatImageButton {
         Path clipPath = new Path();
         RectF rect = new RectF(25, 25, this.getWidth()-25, this.getHeight()-25);
         clipPath.addRoundRect(rect, radius, radius, Path.Direction.CW);
+//        clipPath.addCircle(radius/2,radius/2,radius+2,Path.Direction.CW);
         canvas.clipPath(clipPath);
+
+
         super.onDraw(canvas);
     }
 }

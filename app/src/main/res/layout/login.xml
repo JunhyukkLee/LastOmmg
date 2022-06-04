@@ -50,7 +50,7 @@
         <Button
             android:id="@+id/loginB"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="43dp"
             android:text="로그인"
             android:visibility="visible"
             />
@@ -67,7 +67,7 @@
             android:layout_height="30dp"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/btn_option"
             android:weightSum="15">
 
@@ -115,9 +115,10 @@
                 android:textColor="@drawable/text_option"
                 />
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:layout_weight="1"
                 android:text="or"
                 android:textSize="14dp">
             </TextView>

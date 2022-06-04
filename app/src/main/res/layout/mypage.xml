@@ -8,14 +8,16 @@
     android:orientation="vertical">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:alpha="0.7">
+        android:layout_height="215dp">
+
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="230dp"
             android:scaleType="centerCrop"
-            android:translationZ="1dp" />
+            android:background="@color/menu"
+            android:alpha="0.6"/>
+
         <ImageButton
             android:id="@+id/btn_logout"
             android:layout_width="25dp"
@@ -25,26 +27,28 @@
             android:padding="0sp"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/logout"
-            android:translationZ="1dp" />
-
+            android:src="@drawable/logout" />
         <ImageButton
             android:id="@+id/backToMain"
-            android:layout_width="22dp"
-            android:layout_height="16dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_margin="10dp"
-            android:background="@drawable/back_btn_black"
-            android:translationZ="1dp" />
+            android:background="@drawable/back_btn_black" />
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="37.57dp"
+            android:layout_marginLeft="27.7dp"
+            android:background="@drawable/myrect"/>
         <com.example.lastommg.MyPage.RoundImageView
             android:id="@+id/round_profile_image"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
             android:layout_marginTop = "30dp"
             android:layout_marginLeft = "20dp"
             android:scaleType="centerCrop"
             android:background="@android:color/transparent"
-            android:src="@drawable/null_profile"
-            android:translationZ="1dp" />
+            android:src="@drawable/null_profile" />
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
@@ -52,27 +56,28 @@
             android:layout_marginTop="140dp"
             android:layout_marginLeft="20dp"
             android:textStyle="bold"
-            android:translationZ="1dp"
+            android:textColor="@color/black"
             android:textSize="17dp"/>
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="180dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="170dp"
             android:layout_marginLeft="20dp"
-            android:orientation="horizontal"
-            android:translationZ="1dp" >
+            android:orientation="horizontal">
             <TextView
                 android:id="@+id/intro"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_marginRight="40dp"
                 android:visibility="visible"
+                android:textColor="@color/black"
                 android:textSize="17dp"/>
             <EditText
                 android:id="@+id/edit_intro"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_marginRight="40dp"
+                android:translationZ="20dp"
                 android:visibility="invisible"
                 android:textSize="17dp"/>
 
@@ -83,7 +88,6 @@
                 android:layout_gravity="top|right"
                 android:layout_marginRight="10dp"
                 android:padding="0sp"
-
                 android:background="@android:color/transparent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/setting" />
@@ -120,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:overScrollMode="never"
@@ -130,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:overScrollMode="never"
