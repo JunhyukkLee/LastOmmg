@@ -208,7 +208,6 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
             }
         });
 
-
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -225,6 +224,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                 }
             }
         });
+
         db.collection("User").document(local.getNickname()).collection("Scrap").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -232,7 +232,6 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Item item = document.toObject(Item.class);
                         scrapAdapter.addScrap(item);
-
                         Log.d("확인", document.getId() + "=>" + document.getData());
                     }
                 } else {

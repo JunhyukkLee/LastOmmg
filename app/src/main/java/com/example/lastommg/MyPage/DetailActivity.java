@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lastommg.Login.App;
+import com.example.lastommg.Login.LoginActivity;
 import com.example.lastommg.SecondTab.Comment;
 import com.example.lastommg.SecondTab.CommentAdapter;
 import com.example.lastommg.SecondTab.Item;
@@ -101,6 +103,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void delItem(){
+        App local = (App) getApplicationContext();
+        mAlbumAdapter = new AlbumAdapter();
         supportFinishAfterTransition();
         Item aitem=new Item(mitem.getGood(),mitem.getComment(),mitem.getScrap(),mitem.getNickname(),mitem.getName(), mitem.getDecripthion(),mitem.getUri(), mitem.getPhoneNumber(), geoPoint,mitem.getAddress(),mitem.getDistance(), timestamp);
         db.collection("items").document(aitem.getName())
@@ -136,6 +140,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         }
+        mAlbumAdapter.removeAllItem(local.getNickname());
+        mAlbumAdapter.notifyDataSetChanged();
+        Intent intent5 = new Intent(DetailActivity.this, MypageActivity.class);
+        //로그아웃누르면  로그인화면으로 이동
+        startActivity(intent5);
+
 
     }
 
