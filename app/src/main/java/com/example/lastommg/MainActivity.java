@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -104,18 +105,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         App local = (App) getApplicationContext();
 
-        Log.d("좃같다","ㅇㅇㅇㅇ");
+        Log.d("좃같다", "ㅇㅇㅇㅇ");
         db.collection("User").whereEqualTo("uid", user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document:task.getResult()){
-                        Log.d("들어오기 성공","ㅉ");
-                        User user=document.toObject(User.class);
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("들어오기 성공", "ㅉ");
+                        User user = document.toObject(User.class);
                         local.setNickname(user.getNickname());
                         local.setPro_img(user.getPro_img());
                         local.setEmail(user.getId());
@@ -124,12 +125,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         Log.d("uri세팅", local.getPro_img());
                         Log.d("닉네임세팅", local.getNickname());
-                        Log.d("이름 세팅",local.getName());
+                        Log.d("이름 세팅", local.getName());
                     }
-                }
-                else
-                {
-                    Log.d("실패","응 실패야",task.getException());
+                } else {
+                    Log.d("실패", "응 실패야", task.getException());
                 }
             }
         });
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         longitude = gpsTracker.getLongitude();
         u_GeoPoint = new GeoPoint(latitude, longitude);
         yoon = findViewById(R.id.plus);
-        context_main=this;
+        context_main = this;
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -216,24 +215,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void changeView(int index) {
         switch (index) {
             case 0:
-                //toolbar.setVisibility(View.INVISIBLE);
                 mPager.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.INVISIBLE);
                 yoon.setVisibility((View.INVISIBLE));
                 swipeRefreshLayout.setVisibility((View.INVISIBLE));
-//                sortDistance.setVisibility(View.INVISIBLE);
-//                sortTime.setVisibility(View.INVISIBLE);
                 break;
             case 1:
-                //toolbar.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
                 yoon.setVisibility((View.VISIBLE));
                 swipeRefreshLayout.setVisibility((View.VISIBLE));
                 mPager.setVisibility(View.INVISIBLE);
                 itemAdapter.notifyDataSetChanged();
                 recyclerView.startLayoutAnimation();
-//                sortDistance.setVisibility(View.VISIBLE);
-//                sortTime.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -294,21 +287,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document:task.getResult()){
-                        Item item=document.toObject(Item.class);
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Item item = document.toObject(Item.class);
                         itemAdapter.addItem(item);
-                        Log.d("확인",document.getId()+"=>"+document.getData());
+                        Log.d("확인", document.getId() + "=>" + document.getData());
                     }
-                }
-                else
-                {
-                    Log.d("실패","응 실패야",task.getException());
+                } else {
+                    Log.d("실패", "응 실패야", task.getException());
                 }
             }
         });
-
-
     }
 
     public void onClick(View v) {
@@ -321,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
     private void anim() {
         if (isFabOpen) {
             isFabOpen = false;

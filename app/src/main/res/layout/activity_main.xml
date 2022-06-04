@@ -10,6 +10,8 @@
         android:id="@+id/toolbar"
         android:layout_height="40dp"
         android:layout_width="match_parent"
+        android:backgroundTint="#00FF0000"
+        android:background="#00FF0000"
         app:menu="@menu/toolbar_menu"
         />
 
