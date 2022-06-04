@@ -13,7 +13,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp">
@@ -34,59 +34,57 @@
 
     <ImageView
         android:id="@+id/good"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_below="@+id/cardview"
         android:layout_alignLeft="@+id/cardview"
-        android:layout_marginTop="10dp"
         android:scaleType="fitXY"
-        android:src="@drawable/yes"/>
+        android:src="@drawable/yes" />
 
     <TextView
         android:id="@+id/goodcount"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_below="@+id/cardview"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/good" />
+        android:layout_toRightOf="@+id/good"
+        android:textAlignment="textEnd"
+        android:textSize="10dp"/>
 
     <ImageView
         android:id="@+id/comment"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_below="@+id/cardview"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/goodcount"
         android:scaleType="fitXY"
         android:src="@drawable/comment" />
+
     <TextView
         android:id="@+id/commentcount"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_below="@+id/cardview"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/comment"/>
+        android:layout_toRightOf="@+id/comment"
+        android:textAlignment="textEnd"
+        android:textSize="10dp"/>
+
     <ImageView
         android:id="@+id/scrap"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_below="@+id/cardview"
-        android:scaleType="fitXY"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/commentcount"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/non_scrap"
-        />
+        android:scaleType="fitXY"
+        android:src="@drawable/non_scrap" />
 
     <TextView
         android:id="@+id/scrapcount"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_below="@+id/cardview"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:layout_toRightOf="@+id/scrap" />
+        android:layout_toRightOf="@+id/scrap"
+        android:textAlignment="textEnd"
+        android:textSize="10dp" />
 </RelativeLayout>

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CommentAdapter commentAdapter;
     static String TAG = "ScrapAdapter";
+    public int pos = 0;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -331,7 +333,29 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
                 }
             }
         });
+        ImageButton commentBtn = view.findViewById(R.id.commentBtn);
+        LinearLayout commentView = view.findViewById(R.id.comment_box);
+        ScrollView infoView = view.findViewById(R.id.info_box);
+        commentView.setVisibility(View.INVISIBLE);
+        infoView.setVisibility(View.VISIBLE);
 
+        commentBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                switch (pos){
+                    case 0:
+                        commentView.setVisibility(View.VISIBLE);
+                        infoView.setVisibility(View.INVISIBLE);
+                        pos = 1;
+                        break;
+                    case 1:
+                        commentView.setVisibility(View.INVISIBLE);
+                        infoView.setVisibility(View.VISIBLE);
+                        pos = 0;
+                        break;
+                }
+            }
+        });
         TextView textView = view.findViewById(R.id.textView);
         Glide.with(mContext).load(u).into(imageView);
 

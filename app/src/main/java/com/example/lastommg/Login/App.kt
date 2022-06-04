@@ -9,7 +9,7 @@ class App : Application() {
     private var email: String?=null
     private var intro: String?=null
     private var uid: String?=null
-
+    private var name: String?=null
 
     companion object{
         var instance : App? = null
@@ -36,17 +36,28 @@ class App : Application() {
     fun getNickname(): String? {
         return nickname
     }
-    fun getUid(): String? {
-        return uid
-    }
-    fun setUid(uid: String): String? {
-        return uid
-    }
 
     fun setNickname(nickname: String?) {
         this.nickname=nickname;
 
     }
+    fun getUid(): String? {
+        return uid
+    }
+
+    fun setUid(uid: String?) {
+        this.uid=uid
+
+    }
+
+    fun getName(): String? {
+        return name
+    }
+
+    fun setName(name: String?) {
+        this.name=name
+    }
+
     fun getPro_img(): String? {
         return pro_img;
     }

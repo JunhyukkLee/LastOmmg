@@ -15,7 +15,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -57,6 +59,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     AlertDialog dialog;
     static String TAG = "Adapter";
     int index = 0;
+
+    public int pos = 0;
 
     @NonNull
     @Override
@@ -319,6 +323,29 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                     Log.w("화긴", "Error deleting document", e);
                                 }
                             });
+                }
+            }
+        });
+
+        ImageButton commentBtn = view.findViewById(R.id.commentBtn);
+        LinearLayout commentView = view.findViewById(R.id.comment_box);
+        ScrollView infoView = view.findViewById(R.id.info_box);
+        commentView.setVisibility(View.INVISIBLE);
+        infoView.setVisibility(View.VISIBLE);
+        commentBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                switch (pos){
+                    case 0:
+                        commentView.setVisibility(View.VISIBLE);
+                        infoView.setVisibility(View.INVISIBLE);
+                        pos = 1;
+                        break;
+                    case 1:
+                        commentView.setVisibility(View.INVISIBLE);
+                        infoView.setVisibility(View.VISIBLE);
+                        pos = 0;
+                        break;
                 }
             }
         });

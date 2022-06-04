@@ -17,23 +17,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:clipToPadding="false" >
-        </androidx.viewpager2.widget.ViewPager2>
+            android:clipToPadding="false"></androidx.viewpager2.widget.ViewPager2>
         <!--준혁-->
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipe"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:layoutAnimation="@anim/item_layout_animation"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:layoutAnimation="@anim/item_layout_animation"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         <!--윤수-->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,40 +47,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/loginbt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="login"
-                android:visibility="gone"
-                />
-            <Button
-                android:id="@+id/logoutbt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="logout"
-                android:visibility="visible"/>
+
             <Button
                 android:id="@+id/sortdistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="위치순"
-                android:visibility="visible"/>
+                android:text="위치순" />
+
             <Button
                 android:id="@+id/sorttime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="시간순"
-                android:visibility="visible"/>
+                android:text="시간순" />
+
             <Button
                 android:id="@+id/mypage_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="마이페이지"
-                android:visibility="visible"/>
+                android:text="마이페이지" />
         </LinearLayout>
 
     </FrameLayout>
@@ -107,7 +92,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="HI" />
-
 
     </com.google.android.material.tabs.TabLayout>
 

@@ -24,15 +24,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.lastommg.Login.LoginActivity;
+import com.example.lastommg.MainActivity;
 import com.example.lastommg.SecondTab.Comment;
 import com.example.lastommg.SecondTab.Item;
 import com.example.lastommg.Login.App;
 import com.example.lastommg.R;
 import com.example.lastommg.SecondTab.myItem;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,6 +49,8 @@ import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 
 import org.w3c.dom.Text;
 
@@ -65,6 +72,9 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
     private static final int CROP_FROM_CAMERA = 2;
     private Uri mImageCaptureUri;
     RoundImageView mPressProfileImg;
+
+    AccessToken accessToken = AccessToken.getCurrentAccessToken();
+    boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +99,22 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
 //        riv.setImageBitmap(bm);
         //프로필 정보 띄우기
         TextView nameSlot = findViewById(R.id.name);
+        ImageButton logout = findViewById(R.id.btn_logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
+                Intent intent3 = new Intent(MypageActivity.this, LoginActivity.class);
+                //로그아웃누르면  로그인화면으로 이동
+                startActivity(intent3);
+
+            }
+        });
+
         TextView emailSlot = findViewById(R.id.email);
         TextView introduction = findViewById(R.id.intro);
         nameSlot.setText(local.getNickname());
-        emailSlot.setText(local.getEmail());
+        emailSlot.setText(local.getName());
         introduction.setText(local.getIntro());
         EditText editIntro=findViewById(R.id.edit_intro);
         ImageButton btn_intro=findViewById(R.id.btn_intro);
@@ -145,24 +167,27 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
         //밑에 사진 띄우기
         init();
         scrap();
-        TextView text_scrap=findViewById(R.id.myscrap);
-        TextView text_item=findViewById(R.id.myitem);
-        text_scrap.setOnClickListener(new View.OnClickListener() {
+
+        //Tab implant
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.mypage_tabs);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                my_album.setVisibility(View.INVISIBLE);
-                my_scrap.setVisibility(View.VISIBLE);
-                scrapAdapter.notifyDataSetChanged();
+            public void onTabSelected(TabLayout.Tab tab) {
+                int pos = tab.getPosition();
+                changeView(pos);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // do nothing
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // do nothing
             }
         });
-        text_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                my_album.setVisibility(View.VISIBLE);
-                my_scrap.setVisibility(View.INVISIBLE);
-                mAlbumAdapter.notifyDataSetChanged();
-            }
-        });
+
 
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -188,7 +213,7 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document:task.getResult()){
                         Item item=document.toObject(Item.class);
-                            scrapAdapter.addScrap(item);
+                        scrapAdapter.addScrap(item);
 
                         Log.d("확인",document.getId()+"=>"+document.getData());
                     }
@@ -200,8 +225,33 @@ public class MypageActivity extends AppCompatActivity implements AlbumAdapter.On
             }
         });
     }
-    //프로필 이미지 설정 methods/////////////////////////////////////////////////////////////////
-
+    private void changeView(int index) {
+        switch (index) {
+            case 0:
+                my_album.setVisibility(View.VISIBLE);
+                my_scrap.setVisibility(View.INVISIBLE);
+                mAlbumAdapter.notifyDataSetChanged();
+                break;
+            case 1:
+                my_album.setVisibility(View.INVISIBLE);
+                my_scrap.setVisibility(View.VISIBLE);
+                scrapAdapter.notifyDataSetChanged();
+                break;
+        }
+    }
+    ///////////////프로필 이미지 설정 methods/////////////////////////////////////////////////////////////////
+    private void signOut(){
+        mAuth.signOut();
+        if (isLoggedIn == true) {
+            LoginManager.getInstance().logOut();
+        }
+        UserManagement.getInstance().requestLogout(new LogoutResponseCallback() {
+            @Override
+            public void onCompleteLogout() {
+                FirebaseAuth.getInstance().signOut();
+            }
+        });
+    }
     //앨범에서 이미지 가져오기
     private void doTakeAlbumAction()
     {
