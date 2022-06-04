@@ -12,16 +12,16 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingLeft="26dp"
-        android:paddingRight="26dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="19dp"
-            android:layout_height="12dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="left"
             android:layout_marginTop="20dp"
-            android:src="@drawable/back_button" />
+            android:src="@drawable/back_btn_black" />
 
         <Button
             android:id="@+id/btn_del"
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="삭제"
+            android:layout_marginTop="-40dp"
             android:visibility="visible"/>
         <ImageView
             android:id="@+id/img_thumb"

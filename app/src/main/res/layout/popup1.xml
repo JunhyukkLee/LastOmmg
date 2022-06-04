@@ -16,11 +16,11 @@
             android:scaleType="centerCrop"/>
         <ImageButton
             android:id="@+id/back"
-            android:background="@android:color/transparent"
+            android:background="#4D917070"
             android:layout_margin="5dp"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/back_button"
+            android:src="@drawable/back_btn_black"
             android:scaleType="centerCrop"/>
     </FrameLayout>
 
