@@ -1,29 +1,38 @@
 package com.example.lastommg.MyPage;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.lastommg.Login.App;
 import com.example.lastommg.R;
 import com.example.lastommg.SecondTab.Item;
 import com.example.lastommg.SecondTab.myItem;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> implements Serializable {
     Context mContext;
+
     ArrayList<Item> myItems = new ArrayList<Item>();
     int index=0;
     public OnItemClickListener mOnItemClickListener = null;
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     public interface OnItemClickListener {
         void onItemClick(View view, myItem item);
     }
@@ -78,7 +87,28 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     public void delItem(Item item){
         myItems.remove(item);
         notifyDataSetChanged();
-        //Toast.makeText(mContext.getApplicationContext(), "게시글이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext.getApplicationContext(), "게시글이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void removeAllItem(String nickname) {
+        myItems.clear();
+        db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Item item = document.toObject(Item.class);
+                        if (item.getNickname().equals(nickname)) {
+                            addItem(item);
+                        }
+                        Log.d("확인", document.getId() + "=>" + document.getData());
+                    }
+                } else {
+                    Log.d("실패", "응 실패야", task.getException());
+                }
+            }
+        });
+        notifyDataSetChanged();
     }
 
 
