@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.lastommg.Login.App;
 import com.example.lastommg.Login.LoginActivity;
+import com.example.lastommg.Login.User;
 import com.example.lastommg.SecondTab.Comment;
 import com.example.lastommg.SecondTab.CommentAdapter;
 import com.example.lastommg.SecondTab.Item;
@@ -41,6 +42,8 @@ import com.google.firebase.storage.StorageReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -102,11 +105,48 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+
+
     private void delItem(){
         App local = (App) getApplicationContext();
         mAlbumAdapter = new AlbumAdapter();
         supportFinishAfterTransition();
         Item aitem=new Item(mitem.getGood(),mitem.getComment(),mitem.getScrap(),mitem.getNickname(),mitem.getName(), mitem.getDecripthion(),mitem.getUri(), mitem.getPhoneNumber(), geoPoint,mitem.getAddress(),mitem.getDistance(), timestamp);
+        Map<String, Object> scrap_id = new HashMap<>();
+        db.collection("items").document(aitem.getName()).collection("Scrap").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                        scrap_id.put("nickname",document.getData());
+                        String nickname=scrap_id.get("nickname").toString().substring(10);
+                        String nnickname=nickname.substring(0,nickname.length()-1);
+                        Log.d("스크랩유저", nnickname);
+                        db.collection("User").document(nnickname).collection("Scrap").document(aitem.getName())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("1화긴", "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("1화긴", "Error deleting document", e);
+                                    }
+                                });
+
+
+                    }
+                } else {
+                    Log.d("실패", "응 실패야", task.getException());
+                }
+            }
+        });
+
+
         db.collection("items").document(aitem.getName())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
