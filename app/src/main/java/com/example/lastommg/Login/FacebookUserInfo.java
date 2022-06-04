@@ -57,6 +57,7 @@ public class FacebookUserInfo extends AppCompatActivity {
         setContentView(R.layout.mypage2);
         mAuth=FirebaseAuth.getInstance();
         context2 = this;
+        //
         storageReference = FirebaseStorage.getInstance().getReference();
         sign = findViewById(R.id.sign);
         sign2 = findViewById(R.id.sign2);
