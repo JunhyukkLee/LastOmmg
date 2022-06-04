@@ -29,7 +29,8 @@ public class MainActivity3 extends AppCompatActivity {
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.CALL_PHONE
     };
 
     @Override
@@ -149,6 +150,32 @@ public class MainActivity3 extends AppCompatActivity {
                                     new AlertDialog.Builder(this)
                                             .setTitle("알림")
                                             .setMessage("위치 권한이 거부되었습니다. 사용을 원하시면 설정에서 해당 권한을 직접 허용하셔야 합니다.")
+                                            .setNeutralButton("설정", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                                    intent.setData(Uri.parse("package:" + getPackageName()));
+                                                    startActivity(intent);
+                                                }
+                                            })
+                                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    finish();
+                                                }
+                                            })
+                                            .setCancelable(false)
+                                            .create()
+                                            .show();
+                                }
+                            }
+                        }
+                        else if (permissions[i].equals(this.PERMISSIONS[4])) {
+                            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                                if ((ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISSIONS[4]))) {
+                                    new AlertDialog.Builder(this)
+                                            .setTitle("알림")
+                                            .setMessage("전화사용이 거부되었습니다.. 사용을 원하시면 설정에서 해당 권한을 직접 허용하셔야 합니다.")
                                             .setNeutralButton("설정", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
