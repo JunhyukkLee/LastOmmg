@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6D9BE"
+
     android:overScrollMode="never">
 
     <LinearLayout
@@ -12,23 +12,26 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingLeft="26dp"
-        android:paddingRight="26dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="19dp"
-            android:layout_height="12dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="left"
             android:layout_marginTop="20dp"
-            android:src="@drawable/back_button" />
+            android:src="@drawable/back_btn_black" />
 
         <Button
             android:id="@+id/btn_del"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="삭제"
+            android:text="게시물 삭제"
+            android:textColor="@color/black"
+            android:layout_marginTop="-40dp"
+            android:background="@android:color/transparent"
             android:visibility="visible"/>
         <ImageView
             android:id="@+id/img_thumb"
