@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="215dp"
-        android:background="#33000000">
+        android:alpha="0.7">
         <ImageView
             android:id="@+id/profile_image"
             android:layout_width="match_parent"
@@ -27,10 +27,11 @@
             android:scaleType="centerCrop"
             android:src="@drawable/logout"
             android:translationZ="1dp" />
+
         <ImageButton
             android:id="@+id/backToMain"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="22dp"
+            android:layout_height="16dp"
             android:layout_margin="10dp"
             android:background="@drawable/back_btn_black"
             android:translationZ="1dp" />

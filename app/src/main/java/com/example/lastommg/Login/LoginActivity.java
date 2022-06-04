@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager mCallbackManager;
     private FirebaseAuth.AuthStateListener authStateListener;
-
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/mypage_button"
+        android:icon="@drawable/person"
+        android:title="마이페이지"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/sorttime"
+        android:title="시간순" />
+
+    <item
+        android:id="@+id/sortdistance"
+        android:title="거리순" />
+</menu>

@@ -39,6 +39,8 @@ public class FacebookUserInfo extends AppCompatActivity {
     TextView name2 = null;
     String profile_name;
     String profile_email;
+    String profile_uid;
+
     ImageView profile2 = null;
     StorageReference storageReference;
     Button sign;
@@ -61,7 +63,10 @@ public class FacebookUserInfo extends AppCompatActivity {
         FirebaseFirestore db2 = FirebaseFirestore.getInstance();
         profile_name = ((LoginActivity) LoginActivity.context5).facebook_name;
         profile_email = ((LoginActivity) LoginActivity.context5).facebook_email;
+        profile_uid = ((LoginActivity) LoginActivity.context5).facebook_uid;
+        Log.d("페에에에북","이동");
         Log.d("페북이름이여",profile_name);
+        Log.d("페북uid이여",profile_uid);
         email2.setText(profile_email);
         checkNick();
 
@@ -118,6 +123,8 @@ public class FacebookUserInfo extends AppCompatActivity {
                 break;
             }
             if(i==(j-1)){//없으므로 닉네임 생성
+                Log.d("페북 닉 없음","이동");
+
                 Toast.makeText(FacebookUserInfo.this, "사용가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
                 userAdd();
             }
@@ -129,7 +136,7 @@ public class FacebookUserInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
-                StorageReference submitProfile = storageReference.child("profile/" + "user.PNG");
+                StorageReference submitProfile = storageReference.child("profile/" + "b.PNG");
                 submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -137,7 +144,7 @@ public class FacebookUserInfo extends AppCompatActivity {
                         Log.d("이메일1", profile_email);
                         Log.d("닉네임1", nickname);
                         Log.d("이름1", profile_name);
-                        User user= new User(profile_email,"한줄소개를입력하세요",profile_name,nickname,uri.toString(),mAuth.getUid());
+                        User user= new User(profile_email,"한줄소개를입력하세요",profile_name,nickname,uri.toString(), profile_uid);
 
 
                         db.collection("User").document(nickname).set(user);

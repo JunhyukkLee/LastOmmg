@@ -2,16 +2,28 @@ package com.example.lastommg;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -55,14 +67,14 @@ import java.io.IOException;
 
 import io.grpc.internal.DnsNameResolver;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final AuthorizationResult.RESULT_CODE SUCCESS = null;
     private BackPressCloseHandler backPressCloseHandler;
     private FirebaseAuth mAuth;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    Button sortDistance, sortTime, mypageb;
+    Toolbar toolbar;
 
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
@@ -79,7 +91,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private FloatingActionButton plus;
     private FirebaseStorage storage;
 
-    ImageView iv_view;
     double latitude;
     double longitude;
     private GpsTracker gpsTracker;
@@ -92,16 +103,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         App local = (App) getApplicationContext();
 
-        Log.d("좃같다","ㅇㅇㅇㅇ");
+        Log.d("좃같다", "ㅇㅇㅇㅇ");
         db.collection("User").whereEqualTo("uid", user.getUid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document:task.getResult()){
-                        Log.d("들어오기 성공","ㅉ");
-                        User user=document.toObject(User.class);
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("들어오기 성공", "ㅉ");
+                        User user = document.toObject(User.class);
                         local.setNickname(user.getNickname());
                         local.setPro_img(user.getPro_img());
                         local.setEmail(user.getId());
@@ -110,16 +125,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
                         Log.d("uri세팅", local.getPro_img());
                         Log.d("닉네임세팅", local.getNickname());
-                        Log.d("이름 세팅",local.getName());
+                        Log.d("이름 세팅", local.getName());
                     }
-                }
-                else
-                {
-                    Log.d("실패","응 실패야",task.getException());
+                } else {
+                    Log.d("실패", "응 실패야", task.getException());
                 }
             }
         });
-
 
         mAlbumAdapter = new AlbumAdapter();
 
@@ -128,55 +140,21 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         longitude = gpsTracker.getLongitude();
         u_GeoPoint = new GeoPoint(latitude, longitude);
         yoon = findViewById(R.id.plus);
-        context_main=this;
+        context_main = this;
 
         mAuth = FirebaseAuth.getInstance();
 
         backPressCloseHandler = new BackPressCloseHandler(this);
-        sortDistance = findViewById((R.id.sortdistance));
-        sortTime = findViewById((R.id.sorttime));
-        mypageb = findViewById(R.id.mypage_button);
-
-        //거리순정렬
-        sortDistance.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                itemAdapter.setDistance(u_GeoPoint);
-                itemAdapter.notifyDataSetChanged();
-                recyclerView.startLayoutAnimation();
-                int i=itemAdapter.getItemCount();
-                Log.d("개수", Integer.toString(i));
-            }
-        });
-        //시간순
-        sortTime.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-              itemAdapter.sortTime();
-              itemAdapter.notifyDataSetChanged();
-              recyclerView.startLayoutAnimation();
-            }
-        });
-        //마이페이지
-        mypageb.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(MainActivity.this, MypageActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //1번 탭 미리 표시(2번도 활성화)
         firstView();
         secondView();
         //2번 탭 구성요소 가리기
-
         yoon.setVisibility((View.INVISIBLE));
         recyclerView.setVisibility(View.INVISIBLE);
         swipeRefreshLayout.setVisibility((View.INVISIBLE));
-        sortDistance.setVisibility(View.INVISIBLE);
-        sortTime.setVisibility(View.INVISIBLE);
-        mypageb.setVisibility(View.INVISIBLE);
+//        sortDistance.setVisibility(View.INVISIBLE);
+//        sortTime.setVisibility(View.INVISIBLE);
         //Tab implant
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -203,6 +181,37 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         backPressCloseHandler.onBackPressed();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.mypage_button:
+                Intent intent = new Intent(MainActivity.this, MypageActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.sorttime:
+                itemAdapter.sortTime();
+                itemAdapter.notifyDataSetChanged();
+                recyclerView.startLayoutAnimation();
+                break;
+            case R.id.sortdistance:
+                itemAdapter.setDistance(u_GeoPoint);
+                itemAdapter.notifyDataSetChanged();
+                recyclerView.startLayoutAnimation();
+                int i = itemAdapter.getItemCount();
+                Log.d("개수", Integer.toString(i));
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void changeView(int index) {
         switch (index) {
             case 0:
@@ -210,9 +219,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 recyclerView.setVisibility(View.INVISIBLE);
                 yoon.setVisibility((View.INVISIBLE));
                 swipeRefreshLayout.setVisibility((View.INVISIBLE));
-                sortDistance.setVisibility(View.INVISIBLE);
-                sortTime.setVisibility(View.INVISIBLE);
-                mypageb.setVisibility(View.INVISIBLE);
                 break;
             case 1:
                 recyclerView.setVisibility(View.VISIBLE);
@@ -221,17 +227,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 mPager.setVisibility(View.INVISIBLE);
                 itemAdapter.notifyDataSetChanged();
                 recyclerView.startLayoutAnimation();
-                sortDistance.setVisibility(View.VISIBLE);
-                sortTime.setVisibility(View.VISIBLE);
-                mypageb.setVisibility(View.VISIBLE);
                 break;
         }
     }
 
     private void firstView() {
         //ViewPager2
-
-
         mPager = findViewById(R.id.viewpager);
         //Adapter
         pagerAdapter = new MyAdapter(this, num_page);
@@ -253,11 +254,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void secondView() {
-        sortDistance.setVisibility(View.VISIBLE);
-        sortTime.setVisibility(View.VISIBLE);
-
-        mypageb.setVisibility(View.VISIBLE);
-
         recyclerView = findViewById(R.id.recycler_view);
         itemAdapter = new ItemAdapter();
         recyclerView.setAdapter(itemAdapter);
@@ -291,21 +287,17 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         db.collection("items").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document:task.getResult()){
-                        Item item=document.toObject(Item.class);
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Item item = document.toObject(Item.class);
                         itemAdapter.addItem(item);
-                        Log.d("확인",document.getId()+"=>"+document.getData());
+                        Log.d("확인", document.getId() + "=>" + document.getData());
                     }
-                }
-                else
-                {
-                    Log.d("실패","응 실패야",task.getException());
+                } else {
+                    Log.d("실패", "응 실패야", task.getException());
                 }
             }
         });
-
-
     }
 
     public void onClick(View v) {
@@ -318,6 +310,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
         }
     }
+
     private void anim() {
         if (isFabOpen) {
             isFabOpen = false;

@@ -6,11 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:backgroundTint="#00FF0000"
+        android:background="#00FF0000"
+        app:menu="@menu/toolbar_menu"
+        />
+
     <!--FrameLayout을 사용하는 이유는 뷰페이저안에 요소들과 겹쳐 있는 움직이지 않는 고정 CircleIndicator와 버튼등을 구성하기 위함-->
     <FrameLayout
         android:id="@+id/frame"
         android:layout_width="match_parent"
-        android:layout_height="670dp">
+        android:layout_height="640dp">
         <!--희찬-->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
@@ -40,36 +49,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15dp"
-            android:src="@drawable/plus"
-            app:backgroundTint="@color/purple_200"
+            android:src="@drawable/post"
+            app:backgroundTint="#D0E9EC"
             tools:ignore="MissingConstraints" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/sortdistance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="위치순" />
-
-            <Button
-                android:id="@+id/sorttime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="시간순" />
-
-            <Button
-                android:id="@+id/mypage_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="마이페이지" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
         </LinearLayout>
-
     </FrameLayout>
 
     <com.google.android.material.tabs.TabLayout
