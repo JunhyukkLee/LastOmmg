@@ -10,6 +10,8 @@
         android:id="@+id/toolbar"
         android:layout_height="40dp"
         android:layout_width="match_parent"
+        android:backgroundTint="#00FF0000"
+        android:background="#00FF0000"
         app:menu="@menu/toolbar_menu"
         />
 
@@ -47,8 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="15dp"
-
-            android:src="@drawable/plus"
+            android:src="@drawable/post"
             app:backgroundTint="#D0E9EC"
             tools:ignore="MissingConstraints" />
 
