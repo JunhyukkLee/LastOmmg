@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <!--FrameLayout을 사용하는 이유는 뷰페이저안에 요소들과 겹쳐 있는 움직이지 않는 고정 CircleIndicator와 버튼등을 구성하기 위함-->
     <FrameLayout
         android:id="@+id/frame"
