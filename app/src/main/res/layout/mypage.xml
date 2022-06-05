@@ -47,8 +47,7 @@
             android:layout_marginTop = "30dp"
             android:layout_marginLeft = "20dp"
             android:scaleType="centerCrop"
-            android:background="@android:color/transparent"
-            android:src="@drawable/null_profile" />
+            android:background="@android:color/transparent" />
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
