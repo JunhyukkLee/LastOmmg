@@ -1,12 +1,13 @@
 package com.example.lastommg.SecondTab;
 
 public class Comment {
-
+    String storename;
     String comment;
     String name;
     String profile_img;
 
-    public Comment(String comment, String name, String profile_img) {
+    public Comment(String storename, String comment, String name, String profile_img) {
+        this.storename=storename;
         this.comment = comment;
         this.name = name;
         this.profile_img=profile_img;
@@ -14,7 +15,13 @@ public class Comment {
 
     public Comment() {
     }
+    public String getStorename() {
+        return storename;
+    }
 
+    public void setStorename(String storename) {
+        this.storename=storename;
+    }
     public String getComment() {
         return comment;
     }

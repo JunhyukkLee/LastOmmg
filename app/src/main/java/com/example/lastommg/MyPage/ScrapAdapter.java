@@ -100,7 +100,7 @@ public class ScrapAdapter extends RecyclerView.Adapter<ScrapAdapter.ViewHolder> 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Comment comment = new Comment(add_comment.getText().toString(),local.getNickname(),local.getPro_img());
+                Comment comment = new Comment(name,add_comment.getText().toString(),local.getNickname(),local.getPro_img());
                 Log.d("id확인",local.getNickname());
                 commentAdapter.addComment(comment);
                 db.collection("items").document(name).collection("Comment").document(add_comment.getText().toString()).set(comment);
