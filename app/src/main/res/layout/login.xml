@@ -7,10 +7,10 @@
     <ImageView
         android:id="@+id/login"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:gravity="center"
-        android:background="@drawable/ommg2"
-        />
+        android:layout_height="180dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/ommg_color"
+        android:gravity="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,66 +50,24 @@
         <Button
             android:id="@+id/loginB"
             android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:text="로그인"
-            android:visibility="visible"
-            />
-
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/loginF"
-            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:visibility="visible" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="horizontal"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_option"
-            android:weightSum="15">
-
-            <ImageView
-                android:layout_width="13dp"
-                android:layout_height="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:layout_marginLeft="4dp"
-                android:src="@drawable/talk">
-            </ImageView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:textColor="#ffffff"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Continue with KakaoTalk"
-                android:stateListAnimator="@null"
-                android:textAllCaps="false"
-                android:id="@+id/btnKako"
-                android:layout_weight="14"
-                android:textSize="17dp"/>
-        </LinearLayout>
-
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="71dp"
-            android:gravity="center"
-            />
-
+            android:text="로그인"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:backgroundTint="#F8E8E8"
+            android:visibility="visible" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
             <TextView
                 android:id="@+id/sb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="회원가입"
                 android:textColor="@drawable/text_option"
@@ -118,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:text="or"
                 android:textSize="14dp">
             </TextView>
@@ -130,8 +88,60 @@
                 android:textColor="@drawable/text_option"
                 android:text="비밀번호 찾기"
                 android:clickable="true"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 />
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/login_via" />
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/loginF"
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:visibility="visible"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center_horizontal"/>
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="110dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/btn_option"
+                android:weightSum="15">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:layout_marginLeft="4dp"
+                    android:src="@drawable/talk">
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
+                    android:gravity="center|left"
+                    android:text="             Continue with KakaoTalk"
+                    android:stateListAnimator="@null"
+                    android:textAllCaps="false"
+                    android:id="@+id/btnKako"
+                    android:layout_weight="14"
+                    android:textStyle="bold"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+        </FrameLayout>
+
+
+
     </LinearLayout>
 </LinearLayout>

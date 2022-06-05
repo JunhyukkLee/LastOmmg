@@ -3,7 +3,7 @@
     <style name="Theme.LastOmmg" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/default_orange</item>
+        <item name="colorPrimary">#9E8FDF</item>
         <item name="colorPrimaryVariant">@color/light_orange</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->

@@ -102,15 +102,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/mypage_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/mpFirstTab"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="게시물" />
+
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/mpSecondTab"
                 android:layout_width="match_parent"

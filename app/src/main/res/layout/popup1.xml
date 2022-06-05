@@ -29,31 +29,32 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
+
         <ImageButton
             android:id="@+id/good"
-            android:layout_width="40dp"
+            android:layout_width="45dp"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:backgroundTint="#ffffff"/>
+            android:backgroundTint="#ffffff"
+            android:scaleType="centerCrop" />
+
         <ImageButton
             android:id="@+id/commentBtn"
-            android:layout_marginLeft="15dp"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:src="@drawable/comment"
             android:scaleType="centerCrop"
+            android:layout_marginLeft="-5dp"
             android:backgroundTint="#ffffff"/>
         <ImageButton
             android:id="@+id/scrap"
             android:layout_width="40dp"
-            android:layout_marginLeft="15dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:backgroundTint="#ffffff" />
         <ImageButton
             android:id="@+id/call"
             android:layout_width="40dp"
-            android:layout_marginLeft="15dp"
+
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/call2"
@@ -61,7 +62,7 @@
         <TextView
             android:id="@+id/nickname"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="75dp"
             android:layout_height="50dp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
@@ -76,49 +77,49 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:text="음식점이름"
-            />
-        <TextView
-            android:id="@+id/address"
-            android:text="음식점주소"
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <View
-            android:id="@+id/line"
-            android:background="@color/black"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_height="2dp"
-            android:bottomLeftRadius="12dp"
-            android:bottomRightRadius="12dp"
-            android:topRightRadius="12dp"
-            android:topLeftRadius="12dp"
-            android:layout_width="match_parent"/>
-        <!--정보들-->
-        <ScrollView
-            android:id="@+id/info_box"
-            android:layout_margin="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/bottom">
             <TextView
-                android:id="@+id/description"
-                android:textStyle="bold"
+                android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:text="음식점이름"
+                />
+            <TextView
+                android:id="@+id/address"
+                android:text="음식점주소"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <View
+                android:id="@+id/line"
+                android:background="@color/black"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_height="2dp"
+                android:bottomLeftRadius="12dp"
+                android:bottomRightRadius="12dp"
+                android:topRightRadius="12dp"
+                android:topLeftRadius="12dp"
+                android:layout_width="match_parent"/>
+            <!--정보들-->
+            <ScrollView
+                android:id="@+id/info_box"
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/bottom">
+                <TextView
+                    android:id="@+id/description"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-        </ScrollView>
+            </ScrollView>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/comment_box"
@@ -130,7 +131,7 @@
                 android:id="@+id/recycler_view"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="190dp"
                 android:layout_above="@id/bottom"/>
             <RelativeLayout
                 android:id="@+id/bottom"
@@ -143,19 +144,27 @@
                 <ImageView
                     android:id="@+id/image_profile"
                     android:layout_width="40dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
+                    android:padding="2dp"
                     android:scaleType="fitXY" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/boarder"/>
 
                 <EditText
                     android:id="@+id/add_comment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
                     android:layout_toLeftOf="@id/post"
                     android:layout_toRightOf="@id/image_profile"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"/>
 
                 <TextView
                     android:id="@+id/post"

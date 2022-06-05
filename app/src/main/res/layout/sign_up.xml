@@ -7,8 +7,8 @@
     <ImageView
         android:id="@+id/signup"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:background="@drawable/ommg2"
+        android:layout_height="270dp"
+        android:background="@drawable/ommg_large"
         />
 
     <LinearLayout
