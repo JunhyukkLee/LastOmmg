@@ -275,7 +275,7 @@ public class PostActivity extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(PostActivity.this, "사진 업로드 실패", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PostActivity.this, "게시글 업로드가 실패하였습니다.", Toast.LENGTH_SHORT).show();
                 Log.v("알림", "사진 업로드 실패");
                 progressDialog.dismiss();
                 e.printStackTrace();
@@ -311,7 +311,7 @@ public class PostActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }
                 itemAdapter.notifyDataSetChanged();
-                Toast.makeText(PostActivity.this, "사진 업로드가 성공하였습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PostActivity.this, "게시글이 업로드되었습니다.", Toast.LENGTH_SHORT).show();
                 p_recyclerView.startLayoutAnimation();
 
                 //postActivity 나가기
