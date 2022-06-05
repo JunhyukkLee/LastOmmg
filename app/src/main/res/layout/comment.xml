@@ -12,7 +12,8 @@
         android:scaleType="fitXY" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/linear"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@id/image_profile"
@@ -30,6 +31,15 @@
             android:layout_height="wrap_content"
             android:maxLines="5" />
 
+
     </LinearLayout>
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/del"
+        android:layout_marginTop="9dp"
+        android:layout_toEndOf="@id/linear"/>
 
 </RelativeLayout>
