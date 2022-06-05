@@ -57,7 +57,7 @@
             android:layout_height="200dp"
             android:scaleType="centerInside"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/plus_box"
             android:id="@+id/image_added"/>
         <EditText
             android:id="@+id/name"
