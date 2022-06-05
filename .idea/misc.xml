@@ -3,10 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/activity_maps.xml" value="0.36614583333333334" />
         <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/activity_post.xml" value="0.36614583333333334" />
         <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/custom_info_contents.xml" value="0.36614583333333334" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/fragment_1.xml" value="0.1875" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/fragment_2.xml" value="0.1875" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/fragment_3.xml" value="0.1875" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/item_layout_lr.xml" value="0.1875" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/mypage.xml" value="0.1875" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/popup1.xml" value="0.1875" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/layout/popup2.xml" value="0.1875" />
         <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/menu/current_place_menu.xml" value="0.36614583333333334" />
+        <entry key="..\:/Univ/3rd/3-1/mobile programming/term project/git/app/src/main/res/menu/toolbar_menu.xml" value="0.33" />
         <entry key="..\:/Users/82109/AndroidStudioProjects/LastOmmggit/app/src/main/res/layout/activity_main.xml" value="0.18611111111111112" />
         <entry key="..\:/Users/82109/AndroidStudioProjects/LastOmmggit/app/src/main/res/layout/activity_post.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/82109/AndroidStudioProjects/LastOmmggit/app/src/main/res/layout/mypage.xml" value="0.2282051282051282" />
@@ -24,12 +33,9 @@
         <entry key="..\:/Users/Cert/Desktop/start 2/start 2/start/start/app/src/main/res/layout/popup1.xml" value="0.2875" />
         <entry key="..\:/Users/Cert/Desktop/start 2/start 2/start/start/app/src/main/res/layout/popup2.xml" value="0.2875" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/drawable/boarder.xml" value="0.28" />
-        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/drawable/btn_option.xml" value="0.317" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3185" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.3185" />
-        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/drawable/myrect.xml" value="0.316" />
-        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/drawable/shape.xml" value="0.317" />
-        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/activity_detail.xml" value="0.33" />
+        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/activity_detail.xml" value="0.5" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/activity_main.xml" value="0.31302083333333336" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/activity_main2.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/activity_main3.xml" value="0.5536458333333333" />
@@ -42,9 +48,8 @@
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/fragment_3.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/item_layout_lr.xml" value="0.4361413043478261" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/item_layout_rl.xml" value="0.5" />
-        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/mypage.xml" value="0.33688600556070436" />
+        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/mypage.xml" value="0.33" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/mypage2.xml" value="0.31302083333333336" />
-        <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/mypage3.xml" value="0.3140625" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/popup1.xml" value="0.33" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/popup2.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/HeeChan/AndroidStudioProjects/LastOmmg/app/src/main/res/layout/uploaded_items.xml" value="0.18115942028985507" />
@@ -55,7 +60,7 @@
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/comment.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/find_pw.xml" value="0.19814814814814816" />
-        <entry key="app/src/main/res/layout/login.xml" value="0.19814814814814816" />
+        <entry key="app/src/main/res/layout/login.xml" value="0.375" />
         <entry key="app/src/main/res/layout/mypage.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/mypage2.xml" value="0.1685185185185185" />
         <entry key="app/src/main/res/layout/popup1.xml" value="0.2520833333333333" />

@@ -276,7 +276,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                 } else {
-                    Toast.makeText(SignupActivity.this, "오류", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(SignupActivity.this, "오류", Toast.LENGTH_LONG).show();
                 }
             }
         });

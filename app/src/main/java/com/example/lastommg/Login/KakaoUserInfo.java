@@ -130,7 +130,7 @@ public class KakaoUserInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String nickname = ((EditText) findViewById(R.id.nickName)).getText().toString();
-                StorageReference submitProfile = storageReference.child("profile/" + "b.PNG");
+                StorageReference submitProfile = storageReference.child("profile/" + "user.PNG");
                 submitProfile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
