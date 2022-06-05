@@ -55,6 +55,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         ((ViewHolder) holder).itemView.startAnimation(animation);
         Comment comment=comments.get(position);
         holder.setItem(comment);
+        if(comment.getName().equals(local.getNickname()))
+        {
+            holder.delete.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.delete.setVisibility(View.INVISIBLE);
+        }
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +141,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             username = itemView.findViewById(R.id.username);
             ccomment = itemView.findViewById(R.id.comment);
             delete=itemView.findViewById(R.id.delete);
+
         }
         public void setItem(Comment comment) {
             username.setText(comment.getName());
